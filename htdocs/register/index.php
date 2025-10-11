@@ -4,6 +4,8 @@ session_start();
 
 $conn = connectDB();
 
+$message = "";
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST["email"]);
     $password = $_POST['password'];
@@ -17,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     //Insert into database
     $stmt = $conn->prepare("INSERT INTO admin_user (email, password) VALUES (?, ?)");
-    $stmt->execute([$email, $password]);
+    $stmt->execute([$email, $password]);s
 
     //Stops reseubmiting the inputs when refreshing the page
     header('Location: ' . $_SERVER['REQUEST_URI']);
