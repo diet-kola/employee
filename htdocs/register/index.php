@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     //Insert into database
     $stmt = $conn->prepare("INSERT INTO admin_user (email, password) VALUES (?, ?)");
-    $stmt->execute([$email, $password]);s
+    $stmt->execute([$email, $password]);
 
     //Stops reseubmiting the inputs when refreshing the page
     header('Location: ' . $_SERVER['REQUEST_URI']);
