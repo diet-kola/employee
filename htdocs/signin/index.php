@@ -1,16 +1,28 @@
 <?php
-//require_once '../../src/config/database.php';
-//session_start();
+require_once '../../src/config/database.php';
+session_start();
 
-//$conn = connectDB();
+$conn = connectDB();
 
-//if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    //$email = $_POST['email'];
-    //$password = $_POST['password'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = trim($_POST["email"]);
+    $password = $_POST['password'];
 
-    //$stmt = $conn->prepare("INSERT INTO admin_user (email, password) VALUES (?, ?)");
-    //$stmt->execute([$email, $password]);
-//}
+    //Check if email and password are empty
+    if (empty($email))
+    { die ("Email is required"); }
+
+    if (empty($password))
+    { die ("Password is required");}
+
+    //Insert into database
+    $stmt = $conn->prepare("INSERT INTO admin_user (email, password) VALUES (?, ?)");
+    $stmt->execute([$email, $password]);
+
+    //Stops reseubmiting the inputs when refreshing the page
+    header('Location: ' . $_SERVER['REQUEST_URI']);
+    exit;
+}
 ?> 
 
 <!DOCTYPE html>
