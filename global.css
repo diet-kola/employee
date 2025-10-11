@@ -1,9 +1,0 @@
-body {
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: rgb(241, 241, 243);
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-}
