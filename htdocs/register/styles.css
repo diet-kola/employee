@@ -47,3 +47,13 @@ body {
     cursor: pointer;
     font-size: 16px;
 }
+
+.login-link {
+    display: block;
+    text-align: center;
+    width: 100%;
+    margin-top: 20px;
+    padding: 8px;
+    color: rgb(120, 87, 178);
+    text-decoration: none;
+}
