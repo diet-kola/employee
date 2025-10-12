@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user = $stmt->fetch();
 
         if (!$user) {
-            $error = "Email does not exist or password is incorrect";
+            $error = "Email does not have an account or password is incorrect";
         } else {
             header('Location: ../mainPage');
             exit;
