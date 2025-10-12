@@ -14,8 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     { $error = "Password is required";}
     else {
         // Check if the user exists in the database
-        $stmt = $conn->prepare("SELECT * FROM admin_user WHERE name = ? AND email = ? AND password = ?");
-        $stmt->execute([$name, $email, $password]);
+        $stmt = $conn->prepare("SELECT * FROM admin_user WHERE email = ? AND password = ?");
+        $stmt->execute([$email, $password]);
         $user = $stmt->fetch();
 
         if ($user) {
@@ -46,10 +46,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <form class="sign-in-form" action="." method="POST">
 
-                <div class="input-container">
-                    <label for="name">Name</label>
-                    <input type="name" name="name">
-                </div>
                 <div class="input-container">
                     <label for="email">Email</label>
                     <input type="email" name="email">
