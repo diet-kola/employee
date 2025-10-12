@@ -9,17 +9,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'];
 
     //Check if email and password are empty
-    // if (empty($email))
-    // { die ("Email is required"); }
+    if (empty($email))
+    { die ("Email is required"); }
 
-    // if (empty($password))
-    // { die ("Password is required");}
+    if (empty($password))
+    { die ("Password is required");}
 
     //Insert into database
-    // $stmt = $conn->prepare("INSERT INTO admin_user (email, password) VALUES (?, ?)");
-    // $stmt->execute([$email, $password]);
+    $stmt = $conn->prepare("INSERT INTO admin_user (email, password) VALUES (?, ?)");
+    $stmt->execute([$email, $password]);
 
-    //Stops reseubmiting the inputs when refreshing the page
+    //Stops resubmiting the inputs when refreshing the page
     header('Location: ' . $_SERVER['REQUEST_URI']);
     exit;
 }
@@ -32,9 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
-    <link rel="stylesheet" href="styles.css">
 
-    <script src="./index.js"></script>
+    <link rel="stylesheet" href="./styles.css">
+
 </head>
 
 <body>
@@ -48,11 +48,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <div class="input-container">
                     <label for="email">Email</label>
-                    <input type="email" name="email">
+                    <input type="email" name="email"> <!-- required> -->
                 </div>
                 <div class="input-container">
                     <label for="password">Password</label>
-                    <input type="password" name="password">
+                    <input type="password" name="password"> <!-- required> -->
                 </div>
 
                 <button type="submit" id="signIn" class="sign-in-button">Register</button>
@@ -60,5 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 </body>
+
+<script src="./index.js"></script>
 
 </html>
