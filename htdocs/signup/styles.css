@@ -1,8 +1,0 @@
-form {
-    display: flex;
-    flex-direction: column;
-    width: 4in;
-    border: black 1px solid;
-    padding: 0.5rem;
-    border-radius: 10px;
-}

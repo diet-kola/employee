@@ -5,7 +5,8 @@ session_start();
 $conn = connectDB();
 $error = "";
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') 
+{
     $name = trim($_POST["full_name"]);
     $email = trim($_POST["email"]);
     $password = $_POST['password'];
@@ -22,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     else 
     {
         // Check if email already exists in database
-        $check = $conn->prepare("SELECT id FROM admin_user WHERE email = ?");
+        $check = $conn->prepare("SELECT admin_id FROM admin_user WHERE email = ?");
         $check->execute([$email]);
 
         if ($check->fetch()) 
@@ -30,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         else
         {
             // Insert email and password into database
-            $stmt = $conn->prepare("INSERT INTO admin_user (name, email, password) VALUES (?, ?, ?) RETURNING id");
+            $stmt = $conn->prepare("INSERT INTO admin_user (name, email, password) VALUES (?, ?, ?) RETURNING admin_id");
             $stmt->execute([$name, $email, $password]);
             $newID = $stmt->fetchColumn();
 
