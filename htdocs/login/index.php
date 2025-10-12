@@ -9,21 +9,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST["email"]);
     $password = $_POST['password'];
 
+    // check kung empty yung email at password
     if (empty($email))
     { $error = "Email is required";} 
     elseif (empty($password)) 
     { $error = "Password is required";}
     else {
-        // Check if the user exists in the database
-        $stmt = $conn->prepare("SELECT * FROM admin_user WHERE email = ? AND password = ?");
-        $stmt->execute([$email, $password]);
-        $user = $stmt->fetch();
+        // Check kung nasa database ba yung email
+        $check = $conn->prepare("SELECT * FROM admin_user WHERE email = ? AND password = ?");
+        $check->execute([$email, $password]);
+        $user = $check->fetch();
 
-        if (!$user) {
-            $error = "Email does not have an account or password is incorrect";
-        } else {
+        // log in kung tama email at password, display error kung hindi
+        if ($user) {
             header('Location: ../mainPage');
             exit;
+        } else { 
+            $error = "Invalid email or password"; 
         }
     }
 }
@@ -44,9 +46,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <h2>Log In</h2>
             </div>
 
-            <?php if ($error): ?>
+            
+            <?php if ($error): /*display message kung may error*/ ?>
                 <div class="error" style="color:#b00020;margin:10px 0;">
-                    <?= htmlspecialchars($error) ?>
+                    <?= htmlspecialchars($error) ?> 
                 </div>
             <?php endif; ?>
             
