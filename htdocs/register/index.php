@@ -15,12 +15,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($password))
     { die ("Password is required");}
 
-    //Insert into database
+    //Insert email and password into database
     $stmt = $conn->prepare("INSERT INTO admin_user (email, password) VALUES (?, ?)");
     $stmt->execute([$email, $password]);
 
-    //Stops resubmiting the inputs when refreshing the page
-    header('Location: ' . $_SERVER['REQUEST_URI']);
+    //Redirect to register successful page after submitting
+    header('Location: ../registerSuccessful');
     exit;
 }
 ?> 
