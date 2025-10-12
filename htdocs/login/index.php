@@ -3,6 +3,7 @@ require_once "../../src/config/database.php";
 session_start();
 
 $conn = connectDB();
+$error = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST["email"]);
@@ -18,12 +19,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute([$email, $password]);
         $user = $stmt->fetch();
 
-        if ($user) {
-            // Redirect to a protected page or dashboard
+        if (!$user) {
+            $error = "Email does not exist or password is incorrect";
+        } else {
             header('Location: ../mainPage');
             exit;
-        } else {
-            // Handle login failure - you might want to set an error message here
         }
     }
 }
@@ -44,6 +44,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <h2>Log In</h2>
             </div>
 
+            <?php if ($error): ?>
+                <div class="error" style="color:#b00020;margin:10px 0;">
+                    <?= htmlspecialchars($error) ?>
+                </div>
+            <?php endif; ?>
+            
             <form class="sign-in-form" action="." method="POST">
 
                 <div class="input-container">
@@ -55,7 +61,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="password" name="password">
                 </div>
 
-                <button type="submit" id="signIn" class="sign-in-button">Sign In</button>
+                <button type="submit" id="signIn" class="sign-in-button">Log In</button>
+
             </form>
         </div>
     </div>
