@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     else 
     {
         // Check if email already exists in database
-        $check = $conn->prepare("SELECT admin_id FROM admin_user WHERE email = ?");
+        $check = $conn->prepare("SELECT ? FROM admin_user");
         $check->execute([$email]);
 
         if ($check->fetch()) 
@@ -31,12 +31,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         else
         {
             // Insert email and password into database
-            $stmt = $conn->prepare("INSERT INTO admin_user (name, email, password) VALUES (?, ?, ?) RETURNING admin_id");
+            $stmt = $conn->prepare("INSERT INTO admin_user (name, email, password) VALUES (?, ?, ?)");
             $stmt->execute([$name, $email, $password]);
             $newID = $stmt->fetchColumn();
 
             // Redirect to register successful page after submitting
-            header('Location: ../registerSuccessful?user_id=' . (int)$newID);
+            header('Location: ../registerSuccessful?user_id=');
             exit;
         }
     }

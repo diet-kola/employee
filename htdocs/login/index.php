@@ -8,7 +8,7 @@ $error = "";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST["email"]);
     $password = $_POST['password'];
-
+    
     // check kung empty yung email at password
     if (empty($email))
     { $error = "Email is required";} 

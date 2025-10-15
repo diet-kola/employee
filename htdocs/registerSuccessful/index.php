@@ -6,9 +6,8 @@
     <title>Document</title>
 </head>
 <body>
-
     <h1>Registered Successfully!</h1>
 
-    <a href="../../login/index.php">Click here to log in</a>
+    <a href="../../login">Click here to log in</a>
 </body>
 </html>
