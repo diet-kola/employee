@@ -3,7 +3,7 @@ require_once '../../src/config/database.php';
 session_start();
 
 $conn = connectDB();
-$error = "";
+$error = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') 
 {
@@ -11,35 +11,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     $email = trim($_POST["email"]);
     $password = $_POST['password'];
 
-    //Check if email and password are empty
+    //Check if Inputs valid
     if (empty($name))
-    { $error = "Full name is required";}
+        { $error = "Name is required";}
     elseif (empty($email))
-    { $error = "Email is required";}
+        { $error = "Email is required";}
     elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
-    { $error = "Invalid email format";}
+        { $error = "Invalid email format";}
     elseif (empty($password))
-    { $error = "Password is required";}
+        { $error = "Password is required";}
+    elseif (strlen($password) < 8) 
+        { $error = "Password must be atleast 8 characters long";}
     else 
-    {
-        // Check if email already exists in database
-        $check = $conn->prepare("SELECT ? FROM admin_user");
-        $check->execute([$email]);
-
-        if ($check->fetch()) 
-        { $error = "Email is already in use";}
-        else
         {
-            // Insert email and password into database
-            $stmt = $conn->prepare("INSERT INTO admin_user (name, email, password) VALUES (?, ?, ?)");
-            $stmt->execute([$name, $email, $password]);
-            $newID = $stmt->fetchColumn();
+            $check = $conn->prepare("SELECT * FROM admin_user WHERE email = ?");
+            $check->execute([$email]);
+            $userExists = $check->fetch();
 
-            // Redirect to register successful page after submitting
-            header('Location: ../registerSuccessful?user_id=');
-            exit;
+            if ($userExists == true) {
+                $error = "Email is already in use";
+            } else {
+                $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+
+                $insert = $conn->prepare("INSERT INTO admin_user (name, email, password) VALUES (?, ?, ?)");
+                $insert->execute([$name, $email, $hashedPassword]);
+
+                header ("Location: ../registerSuccessful/index.php");
+                exit;
+            }
         }
-    }
 }
 ?> 
 
@@ -52,7 +52,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     <title>Register</title>
 
     <link rel="stylesheet" href="./styles.css">
-
 </head>
 
 <body>
@@ -62,8 +61,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                 <h2>Register</h2>
             </div>
 
-            <?php if ($error): ?>
-                <div class="error" style="color:#b00020;margin:10px 0;">
+            <?php if (isset($error)): ?>
+                <div class="error" style="color:red;margin:10px 0;">
                     <?= htmlspecialchars($error) ?>
                 </div>
             <?php endif; ?>
