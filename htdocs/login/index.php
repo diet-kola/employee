@@ -1,35 +1,5 @@
 <?php
-require_once "../../src/config/database.php";
-session_start();
-
-$conn = connectDB();
-$error = "";
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = trim($_POST["email"]);
-    $password = $_POST['password'];
-    
-    // check kung empty yung email at password
-    if (empty($email))
-    { $error = "Email is required";} 
-    elseif (empty($password)) 
-    { $error = "Password is required";}
-    else {
-        // Check kung nasa database ba yung email
-        $check = $conn->prepare("SELECT * FROM admin_user WHERE email = ? AND password = ?");
-        $check->execute([$email, $password]);
-        $user = $check->fetch();
-
-        // log in kung tama email at password, display error kung hindi
-        if ($user) {
-            header('Location: ../mainPage');
-            exit;
-        } else { 
-            $error = "Invalid email or password"; 
-        }
-    }
-}
-
+require_once "../../src/functions/login-function.php";
 ?>
 
 <!DOCTYPE html>

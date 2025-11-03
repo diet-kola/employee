@@ -7,6 +7,6 @@
 </head>
 <body>
     <h1>This is the main page</h1>
-    <a href="../API/logout/logout.php">Log Out</a>
+    <a href=".">Log Out</a>
 </body>
 </html>
