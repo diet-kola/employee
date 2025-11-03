@@ -16,8 +16,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         { $error = "Name is required";}
     elseif (empty($email))
         { $error = "Email is required";}
-    elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
-        { $error = "Invalid email format";}
     elseif (empty($password))
         { $error = "Password is required";}
     elseif (strlen($password) < 8) 
