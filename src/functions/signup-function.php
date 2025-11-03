@@ -3,7 +3,7 @@ require_once '../../src/config/database.php';
 session_start();
 
 $conn = connectDB();
-$error = null;
+$error = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') 
 {
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             $check->execute([$email]);
             $userExists = $check->fetch();
 
-            if ($userExists == true) {
+            if ($userExists) {
                 $error = "Email is already in use";
             } else {
                 $hashedPassword = password_hash($password, PASSWORD_BCRYPT);

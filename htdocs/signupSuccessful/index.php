@@ -7,7 +7,6 @@
 </head>
 <body>
     <h1>Registered Successfully!</h1>
-
     <a href="../../login">Click here to log in</a>
 </body>
 </html>
