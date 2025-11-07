@@ -4,6 +4,7 @@ session_start();
 
 $conn = connectDB();
 $error = "";
+$name = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
 {
@@ -12,8 +13,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     $email = trim($_POST['email']);
     $phoneNum = trim($_POST['phoneNum']);
     $position_id = $_POST['position_id'];
-
-    $name = $firstName . ' ' . $lastName;
 
     if (empty($firstName)) {
         $error = 'First Name is Required';
@@ -31,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         $error = "Position of the Employee is Required";
     }
     else {
-        $check = $conn->prepare("SELECT * FROM admin_user WHERE email = ?");
+        $check = $conn->prepare("SELECT employee_id FROM employees WHERE email = ?");
         $check->execute([$email]);
         $userExists = $check->fetch(); 
 
@@ -41,6 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         else {
             $insert = $conn->prepare('INSERT INTO employees (first_name, last_name, email, contact_no, position_id) VALUES (?, ?, ?, ?, ?)');
             $insert->execute([$firstName, $lastName, $email, $phoneNum, $position_id]);
+
+            $name = $firstName . " " . $lastName . ' has been inserted into the database.';
         }
     }
 }

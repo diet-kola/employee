@@ -31,7 +31,7 @@ require_once '../../../src/functions/CRUD/addEmployee.php';
             <input type="email" name="email"><br>
 
             <label>Phone Number:</label>
-            <input type="text" name="phoneNum"><br><br>
+            <input type="text" name="phoneNum"><br>
 
             <div class="select-container">
                 <label>Position:</label>
@@ -50,10 +50,10 @@ require_once '../../../src/functions/CRUD/addEmployee.php';
 
             <input type="submit" value="Add Employee">
         </form>
-
-        <?php if (trim($name)): ?>
+                
+        <?php if ($name): ?>
             <div>
-                <p> <?= $name . ' has been inserted into the database'?> </p>
+                <p> <?= $name?> </p>
             </div>
         <?php endif; ?>
     </fieldset>
