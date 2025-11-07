@@ -57,5 +57,7 @@ require_once '../../../src/functions/CRUD/addEmployee.php';
             </div>
         <?php endif; ?>
     </fieldset>
+
+    <a href="../../mainPage">Return to Main Page</a>
 </body>
 </html>
