@@ -22,7 +22,7 @@ require_once '../../src/functions/signup-function.php';
 
             <?php if (isset($error)): ?>
                 <div class="error" style="color:red;margin:10px 0;">
-                    <?= htmlspecialchars($error) ?>
+                    <?= $error ?>
                 </div>
             <?php endif; ?>
 
@@ -30,17 +30,17 @@ require_once '../../src/functions/signup-function.php';
 
                 <div class="input-container">
                     <label for="full_name">Name</label>
-                    <input type="full_name" name="full_name"> <!-- required> -->
+                    <input type="full_name" name="full_name">
                 </div>
 
                 <div class="input-container">
                     <label for="email">Email</label>
-                    <input type="email" name="email"> <!-- required> -->
+                    <input type="email" name="email">
                 </div>
 
                 <div class="input-container">
                     <label for="password">Password</label>
-                    <input type="password" name="password"> <!-- required> -->
+                    <input type="password" name="password">
                 </div>
 
                 <button type="submit" id="signIn" class="sign-in-button">Register</button>

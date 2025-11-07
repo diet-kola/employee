@@ -44,8 +44,10 @@ require_once '../../src/functions/CRUD/searchEmployee.php';
                     </td>
                 </tr>
             <?php endforeach; ?>
-
         <?php endif; ?>
+
+        <?php  ?>
+
        
     </table>
 </body>
