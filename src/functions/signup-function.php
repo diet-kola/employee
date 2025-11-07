@@ -1,9 +1,9 @@
 <?php
-require_once '../../src/config/database.php';
+require_once __DIR__ . '/../config/database.php';
 session_start();
 
 $conn = connectDB();
-$error = "";
+$error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') 
 {
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                 $insert = $conn->prepare("INSERT INTO admin_user (name, email, password) VALUES (?, ?, ?)");
                 $insert->execute([$name, $email, $hashedPassword]);
 
-                header ("Location: ../signupSuccessful/index.php");
+                header ("Location: ../signupSuccessful");
                 exit;
             }
         }
