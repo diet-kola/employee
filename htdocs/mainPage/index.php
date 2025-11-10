@@ -22,7 +22,6 @@ require_once '../../src/functions/CRUD/deleteEmployee.php';
     <a href="./addEmployee">Add a New Employee</a><br>
 
     <table>
-        <?php if (isset($_POST['search'])): ?>
             <?php if (!empty($results)): ?>
                 <table>
                     <tr>
@@ -58,7 +57,6 @@ require_once '../../src/functions/CRUD/deleteEmployee.php';
                 <?php else: ?>
                     <p>There was no match for your search</p>
             <?php endif; ?>
-        <?php endif; ?>
     </table>
 </body>
 </html>
