@@ -8,15 +8,21 @@ require_once "../../src/functions/login-function.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <header>
+        <div class=" header-design">
+            <h1>EMPLOYEE TRACKER</h1>
+        </div>
+    </header>
     <div class="sign-in-container">
         <div class="sign-in-box">
             <div class="sign-in-header">
                 <h2>Log In</h2>
             </div>
 
-            
             <?php if ($error): /*display message kung may error*/ ?>
                 <div class="error" style="color:#b00020;margin:10px 0;">
                     <?= $error ?> 
