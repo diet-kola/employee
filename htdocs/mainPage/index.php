@@ -1,5 +1,6 @@
 <?php
 require_once '../../src/functions/CRUD/searchEmployee.php';
+require_once '../../src/functions/CRUD/deleteEmployee.php';
 ?>
 
 <!DOCTYPE html>
@@ -22,36 +23,37 @@ require_once '../../src/functions/CRUD/searchEmployee.php';
 
     <table>
         <?php if (isset($_POST['search'])): ?>
-
-            <?php if ($results): ?>
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone Number</th>
-                    <th>Hire Date</th>
-                    <th>Position</th>
-                </tr>
-                <?php foreach($results as $row): ?>
+            <?php if (!empty($results)): ?>
+                <table>
                     <tr>
-                        <td><?= $row['first_name'] . ' ' . $row['last_name']?></td>
-                        <td><?= $row['email']?></td>
-                        <td><?= $row['contact_no']?></td>
-                        <td><?= $row['hire_date']?></td>
-                        <td><?= $row['position_name']?></td>
-                        <td>
-                            <form action="." action="GET">
-                                <input type="hidden" name="update" value="<?= $row['employee_id'] ?>">
-                                <button type="submit">Update</button>
-                            </form>
-                        </td>
-                        <td>
-                            <form action="." action="GET">
-                                <input type="hidden" name="Delete" value="<?= $row['employee_id'] ?>">
-                                <button type="submit">Delete</button>
-                            </form>
-                        </td>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>Hire Date</th>
+                        <th>Position</th>
                     </tr>
-                <?php endforeach; ?>
+                    <?php foreach($results as $row): ?>
+                        <tr>
+                            <td><?= $row['first_name'] . ' ' . $row['last_name']?></td>
+                            <td><?= $row['email']?></td>
+                            <td><?= $row['contact_no']?></td>
+                            <td><?= $row['hire_date']?></td>
+                            <td><?= $row['position_name']?></td>
+                            <td>
+                                <form action="." method="GET">
+                                    <input type="hidden" name="update" value="<?= $row['employee_id'] ?>">
+                                    <button type="submit">Update</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form action="." method="GET">
+                                    <input type="hidden" name="deleteId" value="<?= $row['employee_id'] ?>">
+                                    <button type="submit" on_click='showConirmation'>Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <table>
 
                 <?php else: ?>
                     <p>There was no match for your search</p>
