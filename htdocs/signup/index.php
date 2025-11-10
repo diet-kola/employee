@@ -29,8 +29,13 @@ require_once '../../src/functions/signup-function.php';
             <form class="sign-in-form" action="." method="POST">
 
                 <div class="input-container">
-                    <label for="full_name">Name</label>
-                    <input type="full_name" name="full_name">
+                    <label for="first_name">FIrst Name</label>
+                    <input type="text" name="first_name">
+                </div>
+
+                <div class="input-container">
+                    <label for="last_name">Last Name</label>
+                    <input type="text" name="last_name">
                 </div>
 
                 <div class="input-container">
@@ -39,11 +44,16 @@ require_once '../../src/functions/signup-function.php';
                 </div>
 
                 <div class="input-container">
+                    <label for="email">Phone Number</label>
+                    <input type="text" name="phone_num">
+                </div>
+
+                <div class="input-container">
                     <label for="password">Password</label>
                     <input type="password" name="password">
                 </div>
 
-                <button type="submit" id="signIn" class="sign-in-button">Register</button>
+                <button type="submit" class="sign-in-button">Register</button>
 
                 <a href="../login/index.php" class="login-link">Already have an account? Log In</a>
             </form>
