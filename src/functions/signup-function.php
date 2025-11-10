@@ -12,8 +12,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     $email = trim($_POST["email"]);
     $phoneNum = trim($_POST["phone_num"]);
     $password = $_POST['password'];
+    $positionID = 9; // 9 is admin position in database
 
-    //Check if the inputs are valid
+    // check kung tama inputs
     if (empty($firstName)) { $error = "First Name is required";}
     elseif (empty($lastName)) { $error = "Last Name is required";}
     elseif (empty($email)) { $error = "Email is required";}
@@ -21,31 +22,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     elseif (empty($password)) { $error = "Password is required";}
     elseif (strlen($password) < 8) { $error = "Password must be atleast 8 characters long";}
     else 
+    {
+        // gamit na ba ang email
+        $check = $conn->prepare("SELECT * FROM employees WHERE email = ?");
+        $check->execute([$email]);
+        $userExists = $check->fetch();
+
+        if ($userExists) 
         {
-            //Checks if user is in the database
-            $check = $conn->prepare("SELECT * FROM employees WHERE email = ?");
-            $check->execute([$email]);
-            $userExists = $check->fetch();
+            $error = "Email is already in use";
+        } 
+        else 
+        {
+            //Encrypts passwod
+            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+            
+            //Inserts admin user sa employee table
+            $insertEmployee = $conn->prepare("INSERT INTO employees (first_name, last_name, email, contact_no, position_id) VALUES (?, ?, ?, ?, ?)");
+            $insertEmployee->execute([$firstName, $lastName, $email, $phoneNum, $positionID]);
 
-            if ($userExists) {
-                $error = "Email is already in use";
-            } else {
-                //Encrypts passwod
-                $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+            $employeeID = $conn->lastInsertId();
                 
-                //Inserts admin user in the employee table
-                $insertEmployee = $conn->prepare("INSERT INTO employees (first_name, last_name, email, contact_no) VALUES (?, ?, ?, ?)");
-                $insertEmployee->execute([$firstName, $lastName, $email, $phoneNum]);
+            //Insert user as an admin
+            $insertAdmin = $conn->prepare('INSERT INTO admin_user (employee_id, password) VALUES (?, ?)');
+            $insertAdmin->execute([$employeeID, $hashedPassword]);
 
-                $employeeID = $conn->lastInsertId();
-                
-                //Insert user as an admin
-                $insertAdmin = $conn->prepare('INSERT INTO admin_user (employee_id, position_id, password) VALUES (?, 9, ?)');
-                $insertAdmin->execute([$employeeID, $hashedPassword]);
-
-                // Redirection
-                header ("Location: ../signupSuccessful");
-                exit;
+            // Redirection
+            header ("Location: ../signupSuccessful");
+            exit;
             }
         }
 }
