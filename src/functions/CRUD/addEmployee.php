@@ -14,30 +14,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     $phoneNum = trim($_POST['phoneNum']);
     $position_id = $_POST['position_id'];
 
-    if (empty($firstName)) {
-        $error = 'First Name is Required';
-    }
-    elseif (empty($lastName)) {
-        $error = 'Last Name is Required';
-    }
-    elseif (empty($email)) {
-        $error = 'Email is required';
-    }
-    elseif (empty($phoneNum)) {
-        $error = 'Phone Number is Required';
-    }
-    elseif (empty($position_id)) {
-        $error = "Position of the Employee is Required";
-    }
-    else {
+    if (empty($firstName)) { $error = 'First Name is Required'; }
+    elseif (empty($lastName)) { $error = 'Last Name is Required'; }
+    elseif (empty($email)) { $error = 'Email is required'; }
+    elseif (empty($phoneNum)) { $error = 'Phone Number is Required'; }
+    elseif (empty($position_id)) { $error = "Position of the Employee is Required"; }
+    else 
+    {
         $check = $conn->prepare("SELECT employee_id FROM employees WHERE email = ?");
         $check->execute([$email]);
         $userExists = $check->fetch(); 
 
-        if ($userExists) {
+        if ($userExists) 
+        {
             $error = "Email is already in use";
         } 
-        else {
+        else 
+        {
             $insert = $conn->prepare('INSERT INTO employees (first_name, last_name, email, contact_no, position_id) VALUES (?, ?, ?, ?, ?)');
             $insert->execute([$firstName, $lastName, $email, $phoneNum, $position_id]);
 
