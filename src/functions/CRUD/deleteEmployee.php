@@ -5,12 +5,12 @@ $conn = connectDB();
 $id = '';
 
 if (isset($_GET['deleteId'])) {
-    die;
     $id = $_GET['deleteId'];
     
-    $delete = $conn->prepare('DELETE FROM employees WHERE employee_id = ?');
-    $delete->execute([$id]);
-         
-    header ('Location: ' . $_SERVER['PHP_SELF']);
-    exit;
+    $deleteAdmin = $conn->prepare('DELETE FROM admin_user WHERE employee_id = ?');
+    $deleteAdmin->execute([$id]);
+
+    $deleteEmployee = $conn->prepare('DELETE FROM employees WHERE employee_id = ?');
+    $deleteEmployee->execute([$id]);
+    
 }
