@@ -17,46 +17,60 @@ require_once '../../src/functions/CRUD/deleteEmployee.php';
         <input name="search" placeholder = "Search for an Employee"> </input>
         <button type="submit">Search</button>
     </form>
+    <form action="." method="POST">  
+        <input type = 'hidden' name="view_all"> </input>
+        <button type="submit">View All</button>
+    </form>
     <br>    
 
     <a href="./addEmployee">Add a New Employee</a><br>
-
+            
+    <?php if (!empty($_SESSION['deleted_employee'])): ?>
+        <p>
+            <?= $_SESSION['deleted_employee']?>
+            <?php $_SESSION['deleted_employee'] = ''; ?>
+        <p>
+    <?php endif; ?> 
+            
     <table>
-            <?php if (!empty($results)): ?>
-                <table>
+        <?php if (!empty($results)): ?>
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Hire Date</th>
+                    <th>Position</th>
+                </tr>
+                <?php foreach($results as $row): ?>
                     <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone Number</th>
-                        <th>Hire Date</th>
-                        <th>Position</th>
+                        <td><?= $row['first_name'] . ' ' . $row['last_name']?></td>
+                        <td><?= $row['email']?></td>
+                        <td><?= $row['contact_no']?></td>
+                        <td><?= $row['hire_date']?></td>
+                        <td><?= $row['position_name']?></td>
+                        <td>
+                            <form action="." method="POST">
+                                <input type="hidden" name="updateId" value="<?= $row['employee_id'] ?>">
+                                <button type="submit">Update</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="." method="POST">
+                                <input type="hidden" name="deleteId" value="<?= $row['employee_id'] ?>">
+                                <button type="submit">Delete</button>
+                            </form>
+                        </td>
                     </tr>
-                    <?php foreach($results as $row): ?>
-                        <tr>
-                            <td><?= $row['first_name'] . ' ' . $row['last_name']?></td>
-                            <td><?= $row['email']?></td>
-                            <td><?= $row['contact_no']?></td>
-                            <td><?= $row['hire_date']?></td>
-                            <td><?= $row['position_name']?></td>
-                            <td>
-                                <form action="." method="GET">
-                                    <input type="hidden" name="update" value="<?= $row['employee_id'] ?>">
-                                    <button type="submit">Update</button>
-                                </form>
-                            </td>
-                            <td>
-                                <form action="." method="GET">
-                                    <input type="hidden" name="deleteId" value="<?= $row['employee_id'] ?>">
-                                    <button type="submit" on_click='showConirmation'>Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                <table>
+                <?php endforeach; ?>
+            </table>
 
-                <?php else: ?>
-                    <p>There was no match for your search</p>
-            <?php endif; ?>
+            <?php elseif (isset($error)): ?>
+                <p>
+                    <?= $error ?>
+                </p>
+
+        <?php endif; ?>
     </table>
 </body>
 </html>
