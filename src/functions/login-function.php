@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     elseif (empty($password)) { $error = "Password is required";}
     else 
     {
-        $check = $conn->prepare("SELECT e.first_name, e.last_name, a.password 
+        $check = $conn->prepare("SELECT e.first_name, e.last_name, a.password, a.admin_id
                                     FROM admin_user a 
                                  JOIN employees e on e.employee_id = a.employee_id
                                     WHERE email = ? AND e.position_id = 9
@@ -27,13 +27,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         if ($check && password_verify($password, $check['password'])) 
         {
             $_SESSION['admin_name'] = $check['first_name'] . ' ' . $check['last_name'];
+            $_SESSION['admin_id'] = $check['admin_id'];
             header('Location: ../mainPage');
             exit;
         } 
-        else 
-        { 
-            $error = "Invalid email or password"; 
-        }
+        else { $error = "Invalid email or password"; }
     }
 }
 ?>

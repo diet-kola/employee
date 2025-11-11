@@ -10,6 +10,7 @@ $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
     $search = trim($_POST['search']);
+    
     if (!empty($search)) 
     {       
         $results = $conn->prepare
@@ -27,20 +28,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
         $results->execute([$search, $search]);
         $results = $results->fetchAll();
 
-        if(empty($results)) 
-        {
-            $error = "There was no match for your search";
-        }
+        if(empty($results)) { $error = "There was no match for your search"; }
     }
+    else { $error = "Please enter a name to search."; }
+
+    // else
+    // {
+    //     $error = "There was no match for your search"
+    // }
 }
 else
 {
-    $stmt = $conn->prepare("
-        SELECT e.employee_id, e.first_name, e.last_name, e.email, e.contact_no, e.hire_date, e.position_id, p.position_name
-        FROM employees e
-        JOIN positions p ON e.position_id = p.position_id
-        ORDER BY e.first_name
-    ");
-    $stmt->execute();
-    $results = $stmt->fetchAll();
+    $results = $conn->prepare("SELECT e.employee_id, e.first_name, e.last_name, e.email, e.contact_no, e.hire_date, e.position_id, p.position_name
+                                FROM employees e
+                            JOIN positions p ON e.position_id = p.position_id
+                                ORDER BY e.first_name
+                            ");
+    $results->execute();
+    $results = $results->fetchAll();
 }

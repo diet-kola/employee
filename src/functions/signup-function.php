@@ -28,10 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         $check->execute([$email]);
         $userExists = $check->fetch();
 
-        if ($userExists) 
-        {
-            $error = "Email is already in use";
-        } 
+        if ($userExists) { $error = "Email is already in use"; } 
         else 
         {
             //Encrypts passwod
@@ -50,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             // Redirection
             header ("Location: ../signupSuccessful");
             exit;
-            }
         }
+    }
 }
 ?> 

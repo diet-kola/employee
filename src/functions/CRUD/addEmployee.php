@@ -25,16 +25,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         $check->execute([$email]);
         $userExists = $check->fetch(); 
 
-        if ($userExists) 
-        {
-            $error = "Email is already in use";
-        } 
+        if ($userExists) { $error = "Email is already in use"; } 
         else 
         {
             $insert = $conn->prepare('INSERT INTO employees (first_name, last_name, email, contact_no, position_id) VALUES (?, ?, ?, ?, ?)');
             $insert->execute([$firstName, $lastName, $email, $phoneNum, $position_id]);
 
-            $name = $firstName . " " . $lastName . ' has been inserted into the database.';
+            $name = $firstName . " " . $lastName . ' has been hired.';
         }
     }
 }
