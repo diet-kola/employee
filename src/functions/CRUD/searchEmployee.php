@@ -6,7 +6,6 @@ $conn = connectDB();
 
 $results = [];
 $search = '';
-$error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
     $search = trim($_POST['search']);
@@ -26,9 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
         $getEmployees->execute([$search, $search, $search]);
         $results = $getEmployees->fetchAll();
 
-        if(empty($results)) { $error = "There was no match for your search"; } // display error if there are no results
+        if(empty($results)) { $_SESSION['message'] = "There was no match for your search"; } // display error if there are no results
     }
-    else { $error = "Please enter a name to search."; } // display error if search is empty
+    else { $_SESSION['message'] = "Please enter a name to search."; } // display error if search is empty
 }
 else
 {
