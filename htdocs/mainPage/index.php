@@ -9,6 +9,7 @@ require_once '../../src/functions/CRUD/deleteEmployee.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
 </head>
 <body>
     <h1>Hotel Employee Tracker</h1>
@@ -17,24 +18,22 @@ require_once '../../src/functions/CRUD/deleteEmployee.php';
         <input name="search" placeholder = "Search for an Employee"> </input>
         <button type="submit">Search</button>
     </form>
-    <form action="." method="POST">  
-        <input type = 'hidden' name="view_all"> </input>
+    <form action="." method="POST">
         <button type="submit">View All</button>
     </form>
     <br>    
 
     <a href="./addEmployee">Add a New Employee</a><br>
             
-    <?php if (!empty($_SESSION['deleted_employee'])): ?>
+    <?php if (!empty($_SESSION['message'])): ?>
         <p>
-            <?= $_SESSION['deleted_employee']?>
-            <?php $_SESSION['deleted_employee'] = ''; ?>
+            <?= $_SESSION['message']?>
+            <?php $_SESSION['message'] = ''; ?>
         <p>
     <?php endif; ?> 
             
     <table>
         <?php if (!empty($results)): ?>
-            <table>
                 <tr>
                     <th>Name</th>
                     <th>Email</th>
@@ -50,7 +49,7 @@ require_once '../../src/functions/CRUD/deleteEmployee.php';
                         <td><?= $row['hire_date']?></td>
                         <td><?= $row['position_name']?></td>
                         <td>
-                            <form action="." method="POST">
+                            <form action="./updateEmployee/" method="POST">
                                 <input type="hidden" name="updateId" value="<?= $row['employee_id'] ?>">
                                 <button type="submit">Update</button>
                             </form>
@@ -63,7 +62,6 @@ require_once '../../src/functions/CRUD/deleteEmployee.php';
                         </td>
                     </tr>
                 <?php endforeach; ?>
-            </table>
 
             <?php elseif (isset($error)): ?>
                 <p>
