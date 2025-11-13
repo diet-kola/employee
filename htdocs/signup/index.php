@@ -10,14 +10,20 @@ require_once '../../src/functions/signup-function.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
 
-    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
+
+<header>
+    <div class="design-header">
+        <h1>EMPLOYEE TRACKER</h1>
+    </div>
+</header>
 
 <body>
     <div class="sign-in-container">
         <div class="sign-in-box">
             <div class="sign-in-header">
-                <h2>Register</h2>
+                <h2>Signup</h2>
             </div>
 
             <?php if (isset($error)): ?>
