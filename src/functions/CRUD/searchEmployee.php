@@ -11,39 +11,32 @@ $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
     $search = trim($_POST['search']);
     
+    //check if search is not empty
     if (!empty($search)) 
     {       
-        $results = $conn->prepare
-        ("
-            SELECT
-                e.employee_id, e.first_name, e.last_name, e.email, e.contact_no, e.hire_date, e.position_id, p.position_name
-            FROM employees e 
-            JOIN 
-                positions p ON e.position_id = p.position_id
-            WHERE 
-                first_name ~* ? OR
-                last_name ~* ?
-        ");
+        // do search
+        $getEmployees = $conn->prepare ("SELECT e.employee_id, e.first_name, e.last_name, e.email, e.contact_no, e.hire_date, e.position_id, p.position_name
+                                         FROM employees e 
+                                         JOIN positions p ON e.position_id = p.position_id
+                                         WHERE 
+                                             first_name ~* ? 
+                                             OR last_name ~* ? 
+                                             OR (e.first_name || ' ' || e.last_name) ~* ?
+                                         ORDER BY e.first_name");
+        $getEmployees->execute([$search, $search, $search]);
+        $results = $getEmployees->fetchAll();
 
-        $results->execute([$search, $search]);
-        $results = $results->fetchAll();
-
-        if(empty($results)) { $error = "There was no match for your search"; }
+        if(empty($results)) { $error = "There was no match for your search"; } // display error if there are no results
     }
-    else { $error = "Please enter a name to search."; }
-
-    // else
-    // {
-    //     $error = "There was no match for your search"
-    // }
+    else { $error = "Please enter a name to search."; } // display error if search is empty
 }
 else
 {
-    $results = $conn->prepare("SELECT e.employee_id, e.first_name, e.last_name, e.email, e.contact_no, e.hire_date, e.position_id, p.position_name
-                                FROM employees e
-                            JOIN positions p ON e.position_id = p.position_id
-                                ORDER BY e.first_name
-                            ");
-    $results->execute();
-    $results = $results->fetchAll();
+    // display all employees on start or if view all is clocked
+    $getEmployees = $conn->prepare("SELECT e.employee_id, e.first_name, e.last_name, e.email, e.contact_no, e.hire_date, e.position_id, p.position_name
+                               FROM employees e
+                               JOIN positions p ON e.position_id = p.position_id
+                               ORDER BY e.first_name");
+    $getEmployees->execute();
+    $results = $getEmployees->fetchAll();    
 }
