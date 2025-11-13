@@ -7,6 +7,7 @@ $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') 
 {
+    // get inputs
     $firstName = trim($_POST["first_name"]);
     $lastName = trim($_POST["last_name"]);
     $email = trim($_POST["email"]);
@@ -38,14 +39,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             $insertEmployee = $conn->prepare("INSERT INTO employees (first_name, last_name, email, contact_no, position_id) VALUES (?, ?, ?, ?, ?)");
             $insertEmployee->execute([$firstName, $lastName, $email, $phoneNum, $positionID]);
 
-            $employeeID = $conn->lastInsertId();
+            $employeeID = $conn->lastInsertId(); // get last id inserted
                 
             //Insert user as an admin
             $insertAdmin = $conn->prepare('INSERT INTO admin_user (employee_id, password) VALUES (?, ?)');
             $insertAdmin->execute([$employeeID, $hashedPassword]);
 
             // Redirection
-            header ("Location: ../signupSuccessful");
+            header ("Location: ../login");
             exit;
         }
     }
