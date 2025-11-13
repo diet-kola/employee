@@ -2,25 +2,40 @@
 require_once __DIR__ . '/../../config/database.php';
 
 $conn = connectDB();
+// $employee = [];
 
-if ($_SERVER['REQUEST_METHOD'] && isset($_POST['deleteId'])) 
+if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['deleteId'])) 
 {
-    $id = $_POST['deleteId'];
+    // get employee_id through hidden input
+    $employeeId = $_POST['deleteId'];
 
-    $getEmployee = $conn->prepare('SELECT first_name, last_name FROM employees WHERE employee_id = ?');
-    $getEmployee->execute([$id]);
-    $employee = $getEmployee->fetch();
+    //get employee info
+    $getEmployee = $conn->prepare("SELECT e.employee_id, e.first_name, e.last_name, a.admin_id
+                                      FROM employees e
+                                   LEFT JOIN admin_user a ON e.employee_id = a.employee_id 
+                                      WHERE e.employee_id = ?");
+    $getEmployee->execute([$employeeId]);
+    $employee = $getEmployee->fetch();   
 
-    //get employee name
-    $_SESSION['deleted_employee'] = $employee['first_name'] . ' ' . $employee['last_name'] . ' has been fired.';
-    
-    $deleteAdmin = $conn->prepare('DELETE FROM admin_user WHERE employee_id = ?');
-    $deleteAdmin->execute([$id]);
+    // Prevent deletion of currently logged-in admin
+    if (!empty($employee['admin_id']) && $employee['admin_id'] == $_SESSION['admin_id']) 
+    {
+        //display message 
+        $_SESSION['message'] = $employee['first_name'] . " " . $employee['last_name'] . " is currently logged in and can't be deleted";
+    }
+    else
+    {
+        //get employee name for display message
+        $_SESSION['message'] = $employee['first_name'] . " " . $employee['last_name'] . " has been fired.";
 
-    $deleteEmployee = $conn->prepare('DELETE FROM employees WHERE employee_id = ?');
-    $deleteEmployee->execute([$id]);
+        //delete from admin_user table if employee is an admin
+        $deleteAdmin = $conn->prepare("DELETE FROM admin_user WHERE employee_id = ?");
+        $deleteAdmin->execute([$employeeId]);
 
-    header('Location: '. $_SERVER['PHP_SELF']);
+        //delete from employees table
+        $deleteEmployee = $conn->prepare("DELETE FROM employees WHERE employee_id = ?");
+        $deleteEmployee->execute([$employeeId]);
+    }
+    header("Location: ."); // refresh page
     exit;
-
 }
