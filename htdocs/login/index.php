@@ -7,29 +7,29 @@ require_once "../../src/functions/login-function.php";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>LOG IN</title>
 
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
         <div class=" header-design">
-            <h1>EMPLOYEE TRACKER</h1>
+            <h1>HOTEL EMPLOYEE TRACKER</h1>
         </div>
     </header>
-    <div class="sign-in-container">
-        <div class="sign-in-box">
-            <div class="sign-in-header">
-                <h2>Log In</h2>
+    <div class="log-in-container">
+        <div class="log-in-box">
+            <div class="log-in-header">
+                <h2>LOG IN</h2>
             </div>
 
-            <?php if ($error): /*display message kung may error*/ ?>
+            <?php if ($error): /*display message kung may error*/ ?> 
                 <div class="error" style="color:#b00020;margin:10px 0;">
                     <?= $error ?> 
                 </div>
             <?php endif; ?>
             
-            <form class="sign-in-form" action="." method="POST">
+            <form class="log-in-form" action="." method="POST">
 
                 <div class="input-container">
                     <label for="email">Email</label>
@@ -40,9 +40,11 @@ require_once "../../src/functions/login-function.php";
                     <input type="password" name="password">
                 </div>
 
-                <button type="submit" id="signIn" class="sign-in-button">Log In</button>
+                <button type="submit" class="log-in-button">Log In</button>
 
             </form>
+
+            <a href="../signup" class="login-link">Don't have an account? Register here </a>
         </div>
     </div>
 </body>
