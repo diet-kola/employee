@@ -21,6 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
                                              first_name ~* ? 
                                              OR last_name ~* ? 
                                              OR (e.first_name || ' ' || e.last_name) ~* ?
+                                             
                                          ORDER BY e.first_name");
         $getEmployees->execute([$search, $search, $search]);
         $results = $getEmployees->fetchAll();
