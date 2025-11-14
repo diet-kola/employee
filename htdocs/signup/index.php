@@ -8,14 +8,14 @@ require_once '../../src/functions/signup-function.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <title>SIGNUP</title>
 
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <header>
     <div class="design-header">
-        <h1>EMPLOYEE TRACKER</h1>
+        <h1>HOTEL EMPLOYEE TRACKER</h1>
     </div>
 </header>
 
@@ -23,7 +23,7 @@ require_once '../../src/functions/signup-function.php';
     <div class="sign-in-container">
         <div class="sign-in-box">
             <div class="sign-in-header">
-                <h2>Signup</h2>
+                <h2>SIGNUP</h2>
             </div>
 
             <?php if (isset($error)): ?>
@@ -35,25 +35,10 @@ require_once '../../src/functions/signup-function.php';
             <form class="sign-in-form" action="." method="POST">
 
                 <div class="input-container">
-                    <label for="first_name">FIrst Name</label>
-                    <input type="text" name="first_name">
-                </div>
-
-                <div class="input-container">
-                    <label for="last_name">Last Name</label>
-                    <input type="text" name="last_name">
-                </div>
-
-                <div class="input-container">
                     <label for="email">Email</label>
                     <input type="email" name="email">
                 </div>
-
-                <div class="input-container">
-                    <label for="email">Phone Number</label>
-                    <input type="text" name="phone_num">
-                </div>
-
+                
                 <div class="input-container">
                     <label for="password">Password</label>
                     <input type="password" name="password">

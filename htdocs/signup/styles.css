@@ -5,7 +5,7 @@ body {
     background-size: cover;
     background-position: center;
     height: 100vh;
-    font-family: 'Copperplate Gothic Light',fantasy;
+    font-family:'Times New Roman', Times, serif;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -18,7 +18,7 @@ header {
     background-color: rgba(255, 255, 255, 0.3);
     text-align: center;
     padding: 20px 0;
-    font-family: 'Copperplate Gothic Light',fantasy;
+    font-family: 'Times New Roman', Times, serif;
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
 }
@@ -56,7 +56,7 @@ header {
 
 
 .sign-in-header h2 {
-    font-family: 'Copperplate Gothic Light',fantasy;
+    font-family: 'Times New Roman', Times, serif;
     font-size: 2rem;
     font-weight: 700;
     margin-bottom: 25px;
@@ -91,6 +91,7 @@ header {
 
 
 .sign-in-button {
+    font-family: 'Times New Roman', Times, serif;
     width: 100%;
     background-color: black;
     border: none;
