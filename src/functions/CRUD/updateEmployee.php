@@ -16,8 +16,8 @@ $getAdmin->execute([$employeeId]);
 $admin = $getAdmin->fetch();
 
 //get all positions
-$positions = $conn->query("SELECT * FROM positions ORDER BY position_id");
-$positions = $positions->fetchAll();
+$getPositions = $conn->query("SELECT * FROM positions ORDER BY position_id");
+$positions = $getPositions->fetchAll();
 
 $employeeName = $employee['first_name'] . " " . $employee['last_name'];
 
@@ -42,18 +42,13 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['first_name']))
   elseif (empty($positionId)) { $error = "Position is required."; }
   else
   {
-    if (!empty($employee['position_id']) && $employee['position_id'] == 9) 
+    $userIsAdmin = !empty($employee['position_id']) && $employee['position_id'] == 9;
+    if ($userIsAdmin) 
     {
       $removeAdmin = $conn->prepare("DELETE FROM admin_user WHERE employee_id = ?");
       $removeAdmin->execute([$employeeId]); 
     }
 
-    if ($positionId == 9 && empty($admin)) {
-            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-            $insertAdmin = $conn->prepare("INSERT INTO admin_user (employee_id, password) VALUES (?, ?)");
-            $insertAdmin->execute([$employeeId, $hashedPassword]);
-    }
-    
     $update = $conn->prepare("UPDATE employees
                               SET first_name = ?, last_name = ?, email = ?, contact_no = ?, position_id = ?
                               WHERE employee_id = ?

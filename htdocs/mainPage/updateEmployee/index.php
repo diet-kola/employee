@@ -33,14 +33,23 @@ require_once '../../../src/functions/CRUD/updateEmployee.php';
         <label>Phone Number:</label>
         <input type="text" name="contact_no" value="<?= $employee['contact_no'] ?>"><br>
 
+
         <label>Position:</label>
-        <select name="position_id" id="positionSelect">
+        <select name="position_id"
+            <?=  $employee['position_id'] == 9 ? 'disabled' : '' ?>>
             <?php foreach ($positions as $position): ?>
-                <option value="<?= $position['position_id'] ?>" <?= $position['position_id'] == $employee['position_id'] ? 'selected' : '' ?>>
+                <option value="<?= $position['position_id'] ?>" 
+                    <?= $position['position_id'] == $employee['position_id'] ? 'selected' : '' ?>
+                    <?= $position['position_id'] == 9 ? 'disabled' : '' ?>>
                     <?= $position['position_name'] ?>
                 </option>
             <?php endforeach; ?>
         </select><br>
+
+        <?php if ($employee['position_id'] == 9): ?>
+            <!-- keep DB Admin position on submit even if disabled -->
+            <input type="hidden" name="position_id" value="9">
+        <?php endif; ?>
 
         <button type="submit">Update Employee</button>
     </form>
