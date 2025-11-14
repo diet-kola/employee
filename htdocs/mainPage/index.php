@@ -6,14 +6,26 @@ require_once '../../src/functions/CRUD/deleteEmployee.php';
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
-</head>
-<body>
-    <h1>Hotel Employee Tracker</h1>
+    <link rel="stylesheet" href="styles.css">
 
+    <script src="../API/index.js"></script>
+
+</head>
+
+<header class="header">
+    <div class="title-header">Hotel Employee Tracker</div>
+    <div class="admin-info">
+        Logged in as: <?= $_SESSION['admin_name'] ?>
+        <a href="../logout.php" class="logout-btn">Logout</a>
+    </div>
+</header>
+
+<body>
     <form action="." method="POST">  
         <input name="search" placeholder = "Search for an Employee"> </input>
         <button type="submit">Search</button>
@@ -55,7 +67,7 @@ require_once '../../src/functions/CRUD/deleteEmployee.php';
                             </form>
                         </td>
                         <td>
-                            <form action="." method="POST">
+                            <form action="." method="POST" onsubmit="return confirmDelete('<?= $row['first_name'] . ' ' . $row['last_name'] ?>')">
                                 <input type="hidden" name="deleteId" value="<?= $row['employee_id'] ?>">
                                 <button type="submit">Delete</button>
                             </form>
