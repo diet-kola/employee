@@ -31,10 +31,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         if ($userExists) { $error = "Email is already in use"; } // set error if email is in use
         else 
         {
-            //insert into allowed_email
-            $insert = $conn->prepare('INSERT INTO allowed_email (email, is_admin) VALUES (?, false)');
-            $insert->execute([$email]); 
-
             //insert into employee database
             $insert = $conn->prepare('INSERT INTO employees (first_name, last_name, email, contact_no, position_id) VALUES (?, ?, ?, ?, ?)');
             $insert->execute([$firstName, $lastName, $email, $phoneNum, $position_id]);

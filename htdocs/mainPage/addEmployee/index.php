@@ -44,7 +44,8 @@ require_once '../../../src/functions/CRUD/addEmployee.php';
                         <option value="5">Bellhop</option>
                         <option value="6">Room Attendant</option> 
                         <option value="7">Room Server</option>   
-                        <option value="8">Repairman</option>  
+                        <option value="8">Repairman</option>
+                        <option value="9">Database Admin</option>  
                     </select>
             </div>  
 

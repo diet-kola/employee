@@ -119,3 +119,8 @@ header {
     text-decoration: underline;
     cursor: pointer;
 }
+
+.error {
+    color: rgb(210, 23, 23);
+    margin: 10px 0;
+}

@@ -27,7 +27,7 @@ require_once '../../src/functions/signup-function.php';
             </div>
 
             <?php if (isset($error)): ?>
-                <div class="error" style="color:red;margin:10px 0;">
+                <div class="error">
                     <?= $error ?>
                 </div>
             <?php endif; ?>

@@ -42,18 +42,16 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['first_name']))
   elseif (empty($positionId)) { $error = "Position is required."; }
   else
   {
-    $userIsAdmin = !empty($employee['position_id']) && $employee['position_id'] == 9;
-    if ($userIsAdmin) 
-    {
-      $removeAdmin = $conn->prepare("DELETE FROM admin_user WHERE employee_id = ?");
-      $removeAdmin->execute([$employeeId]); 
-    }
-
     $update = $conn->prepare("UPDATE employees
                               SET first_name = ?, last_name = ?, email = ?, contact_no = ?, position_id = ?
                               WHERE employee_id = ?
                             ");
     $update->execute([$firstName, $lastName, $email, $contactNo, $positionId, $employeeId]);
+
+    if ($positionId == 9)
+    {
+      $_SESSION['admin_name'] = $firstName . ' ' . $lastName;
+    }
 
     $_SESSION['message'] = $employeeName . "'s information has been updated";
     header("Location: ../../mainPage"); // redirect back to main page

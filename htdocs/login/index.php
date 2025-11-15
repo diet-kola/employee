@@ -24,7 +24,7 @@ require_once "../../src/functions/login-function.php";
             </div>
 
             <?php if ($error): /*display message kung may error*/ ?> 
-                <div class="error" style="color:#b00020;margin:10px 0;">
+                <div class="error">
                     <?= $error ?> 
                 </div>
             <?php endif; ?>

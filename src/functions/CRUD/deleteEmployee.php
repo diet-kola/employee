@@ -10,15 +10,12 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['deleteId']))
     $employeeId = $_POST['deleteId'];
 
     //get employee info
-    $getEmployee = $conn->prepare("SELECT e.employee_id, e.first_name, e.last_name, a.admin_id
-                                      FROM employees e
-                                   LEFT JOIN admin_user a ON e.employee_id = a.employee_id 
-                                      WHERE e.employee_id = ?");
+    $getEmployee = $conn->prepare("SELECT * FROM employees WHERE employee_id = ?");
     $getEmployee->execute([$employeeId]);
     $employee = $getEmployee->fetch();   
 
     // Prevent deletion of currently logged-in admin
-    if (!empty($employee['admin_id']) && $employee['admin_id'] == $_SESSION['admin_id']) 
+    if (!empty($employee['employee_id']) && $employee['employee_id'] == $_SESSION['admin_id']) 
     {
         //display message 
         $_SESSION['message'] = $employee['first_name'] . " " . $employee['last_name'] . " is currently logged in and can't be deleted";

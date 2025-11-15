@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     elseif (strlen($password) < 8) { $error = "Password must be atleast 8 characters long";}
     else 
     {
-         // gamit na ba ang email
+         // check kung nasa system  na ba yung email
         $check = $conn->prepare("SELECT * FROM employees WHERE email = ?");
         $check->execute([$email]);
         $userExists = $check->fetch();
@@ -24,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         if (!$userExists) { $error = 'This email is not authorized to create an account';}
         else 
         {
-
             // Hash the password
             $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
@@ -33,8 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             $insertPassword->execute([$hashedPassword, $email]);
 
             header ("Location: ../login");
-            exit;
-            
+            exit;  
         }
     }
 }
