@@ -1,14 +1,13 @@
 <?php
 require_once __DIR__ . '/../../config/database.php';
 
-session_start();
 $conn = connectDB();
 
 $results = [];
 $search = '';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
-    $search = trim($_POST['search']);
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['search'])) {
+    $search = trim($_GET['search']);
     
     //check if search is not empty
     if (!empty($search)) 

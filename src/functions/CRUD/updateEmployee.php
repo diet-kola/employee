@@ -1,6 +1,5 @@
 <?php
 require_once __DIR__ . '/../../config/database.php';
-session_start();
 
 $conn = connectDB();
 $employeeId = $_POST['updateId'];
@@ -48,7 +47,7 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['first_name']))
                             ");
     $update->execute([$firstName, $lastName, $email, $contactNo, $positionId, $employeeId]);
 
-    if ($positionId == 9)
+    if ($_SESSION['admin_id'] == $employee['employee_id'])
     {
       $_SESSION['admin_name'] = $firstName . ' ' . $lastName;
     }
