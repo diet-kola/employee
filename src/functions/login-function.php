@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             {
                 $_SESSION['admin_name'] = $user['first_name'] . ' ' . $user['last_name'];
                 $_SESSION['admin_id'] = $user['employee_id'];
-                header('Location: ../mainPage'); // redirect to mainPage
+                header('Location: ../admin_page/dashboard'); // redirect to mainPage
                 exit;
             }
             else
