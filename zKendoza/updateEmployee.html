@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Employee</title>
+</head>
+<body>
+    <h1>Update Employee</h1>
+
+    <form action="" method="POST">
+        <input type="hidden" name="updateId" value="employeeId">
+
+        <label>First Name:</label>
+        <input type="text" name="first_name" value="first-name"><br>
+
+        <label>Last Name:</label>
+        <input type="text" name="last_name" value="last-name"><br>
+
+        <label>Email:</label>
+        <input type="email" name="email" value="email"><br>
+
+        <label>Phone Number:</label>
+        <input type="text" name="contact_no" value="contact-no"><br>
+
+        <label>Position:</label>
+        <select name="position_id">
+                        <option value="">Position</option>
+                        <option value="1">Manager</option>
+                        <option value="2">Chef</option>
+                        <option value="3">Server</option>
+                        <option value="4">Receptionist</option>
+                        <option value="5">Bellhop</option>
+                        <option value="6">Room Attendant</option> 
+                        <option value="7">Room Server</option>   
+                        <option value="8">Repairman</option>
+                        <option value="9">Database Admin</option>  
+        </select><br>
+
+        <button type="submit">Update Employee</button>
+    </form>
+
+    <a href="..">Back to Main Page</a>
+</body>
+</html>
