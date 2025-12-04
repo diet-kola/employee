@@ -4,6 +4,11 @@ require_once __DIR__ . '/../../config/database.php';
 $conn = connectDB();
 // $employee = [];
 
+if (empty($_SESSION['employee_id'])) {
+    header("Location: ../../login");     
+    exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['deleteId'])) 
 {
     // get employee_id through hidden input
@@ -15,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['deleteId']))
     $employee = $getEmployee->fetch();   
 
     // Prevent deletion of currently logged-in admin
-    if (!empty($employee['employee_id']) && $employee['employee_id'] == $_SESSION['admin_id']) 
+    if (!empty($employee['employee_id']) && $employee['employee_id'] == $_SESSION['employee_id']) 
     {
         //display message 
         $_SESSION['message'] = $employee['first_name'] . " " . $employee['last_name'] . " is currently logged in and can't be deleted";

@@ -4,6 +4,11 @@ require_once __DIR__ . '/../../config/database.php';
 $conn = connectDB();
 $employeeId = $_POST['updateId'];
 
+if (empty($_SESSION['employee_id'])) {
+        header("Location: ../../login");
+        exit;
+}  
+
 // get employee
 $getEmployee = $conn->prepare("SELECT * FROM employees WHERE employee_id = ?");
 $getEmployee->execute([$employeeId]);
@@ -53,7 +58,7 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['first_name']))
     }
 
     $_SESSION['message'] = $employeeName . "'s information has been updated";
-    header("Location: ../../mainPage"); // redirect back to main page
+    header("Location: ../../employees"); // redirect back to main page
     exit;
   }
 }

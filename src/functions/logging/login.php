@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/../config/database.php";
+require_once __DIR__ . "/../../config/database.php";
 session_start();
 
 $conn = connectDB();
@@ -24,12 +24,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         if ($user && $user['password'] == null) { $error = 'Please signup your email first';}
         else if ($user && password_verify($password, $user['password'])) 
         {
+            // get id of employee
+            $_SESSION['employee_id'] = $user['employee_id'];
             //admin login
             if ($user['position_id'] == 9)
             {
                 $_SESSION['admin_name'] = $user['first_name'] . ' ' . $user['last_name'];
-                $_SESSION['admin_id'] = $user['employee_id'];
-                header('Location: ../admin_page/dashboard'); // redirect to mainPage
+                header('Location: ../admin_page/dashboard'); // redirect to dashboard
                 exit;
             }
             else

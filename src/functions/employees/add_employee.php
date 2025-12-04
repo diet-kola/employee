@@ -1,10 +1,14 @@
 <?php
 require_once __DIR__ . '/../../config/database.php';
-session_start();
 
 $conn = connectDB();
 $error = "";
 $name = '';
+
+if (empty($_SESSION['employee_id'])) {
+        header("Location: ../../login");
+        exit;
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
 {
