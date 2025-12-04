@@ -1,5 +1,6 @@
 <?php
-require_once '../../../src/functions/CRUD/addEmployee.php';
+session_start();
+require_once '../../../../src/functions/employees/add_employee.php';
 ?>
 
 <!DOCTYPE html>
@@ -15,11 +16,11 @@ require_once '../../../src/functions/CRUD/addEmployee.php';
     <fieldset>
         <form action="." method="POST">
 
-            <?php if ($error): ?>
+            <?php if ($error) { ?>
                 <div>
-                    <p> <?= $error?> </p>
+                    <p> <?php echo $error?> </p>
                 </div>
-            <?php endif; ?>
+            <?php } ?>
 
             <label>First Name:</label>
             <input type="text" name="first_name"><br>
@@ -49,16 +50,16 @@ require_once '../../../src/functions/CRUD/addEmployee.php';
                     </select>
             </div>  
 
-            <input type="submit" value="Add Employee">
+            <input type="submit">
         </form>
                 
-        <?php if ($name): ?>
+        <?php if ($name) { ?>
             <div>
-                <p> <?= $name?> </p>
+                <p> <?php echo $name?> </p>
             </div>
-        <?php endif; ?>
+        <?php } ?>
     </fieldset>
 
-    <a href="../../mainPage">Return to Main Page</a>
+    <a href="../../employees">Return to Main Page</a>
 </body>
 </html>

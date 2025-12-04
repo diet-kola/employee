@@ -1,5 +1,6 @@
 <?php 
-require_once '../../../src/functions/CRUD/updateEmployee.php';
+session_start();
+require_once '../../../../src/functions/employees/update_employee.php';
 ?>
 
 <!DOCTYPE html>
@@ -12,11 +13,11 @@ require_once '../../../src/functions/CRUD/updateEmployee.php';
 <body>
     <h1>Update Employee</h1>
 
-    <?php if (!empty($error)): ?>
+    <?php if (!empty($error)) { ?>
         <p>
-            <?= $error ?>
+            <?php $error ?>
         </p>
-    <?php endif; ?>
+    <?php } ?>
 
     <form action="" method="POST">
         <input type="hidden" name="updateId" value="<?= $employee['employee_id'] ?>">
@@ -35,11 +36,12 @@ require_once '../../../src/functions/CRUD/updateEmployee.php';
 
         <label>Position:</label>
         <select name="position_id">
-            <?php foreach ($positions as $position): ?>
-                <option value="<?= $position['position_id'] ?>">
-                    <?= $position['position_name'] ?>
+            <?php foreach ($positions as $position) { ?>
+                <option value="<?php echo $position['position_id'] ?>"
+                    <?php echo $position['position_id'] == $employee['position_id'] ? 'selected' : '' ?>>
+                    <?php echo $position['position_name'] ?>
                 </option>
-            <?php endforeach; ?>
+            <?php } ?>
         </select><br>
 
         <button type="submit">Update Employee</button>

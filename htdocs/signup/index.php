@@ -1,5 +1,5 @@
 <?php
-require_once '../../src/functions/signup-function.php';
+require_once '../../src/functions/logging/signup.php';
 ?> 
 
 <!DOCTYPE html>

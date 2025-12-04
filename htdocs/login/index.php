@@ -1,5 +1,5 @@
 <?php
-require_once "../../src/functions/login-function.php";
+require_once "../../src/functions/logging/login.php";
 ?>
 
 <!DOCTYPE html>
@@ -49,6 +49,6 @@ require_once "../../src/functions/login-function.php";
     </div>
 </body>
 
-<script src="../API/clearLogin.js"></script>
+<!-- <script src="../API/clearLogin.js"></script> -->
 
 </html>

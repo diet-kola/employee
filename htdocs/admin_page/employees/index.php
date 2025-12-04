@@ -1,8 +1,7 @@
 <?php
 session_start();
-
-require_once '../../../src/functions/CRUD/searchEmployee.php';
-require_once '../../../src/functions/CRUD/deleteEmployee.php';
+require_once '../../../src/functions/employees/search_employee.php';
+require_once '../../../src/functions/employees/delete_employee.php';
 ?>
 
 <!DOCTYPE html>
@@ -19,78 +18,102 @@ require_once '../../../src/functions/CRUD/deleteEmployee.php';
 
 <body>
 
-<!-- Sidebar -->
-<?php include '../../_reusables/sidebar.php'; ?>
+    <!-- sidebar -->
+    <?php include '../../_reusables/sidebar.php'; ?>
+    <!-- header -->
+    <?php include '../../_reusables/header.php'; ?>
 
-<!-- Header -->
-<?php include '../../_reusables/header.php'; ?>
+    <!-- main content -->
+    <div id="main" class="main">
 
-<div id="main" class="main">
-    <!-- Employee Search -->
-    <form action="." method="GET" class="search-bar">  
-        <input name="search" placeholder = "Search for an Employee"> </input>
-        <button type="submit">Search</button>
-        <button type="submit">View All</button>
-    </form>   
+        <!-- employee search -->
+        <form action="." method="GET" class="search-bar">  
+            <input name="search" placeholder="Search for an Employee"> </input>
+            <select>
+                <option value="name">Name</option>
+                <option value="email">email</option>
+                <option value="position">Position</option>
+            </select>
+            <button type="submit" name="action" value="search">Search</button>
+            <button type="submit">View All</button>
+        </form>   
 
-    <!-- Add Employee -->
-    <a href="./addEmployee" class="add-btn">Add a New Employee</a><br>
-            
-    <!-- Error Message -->
-    <?php if (!empty($_SESSION['message'])): ?>
-        <p>
-            <?= $_SESSION['message']?>
-            <?php $_SESSION['message'] = ''; ?>
-        <p>
-    <?php endif; ?> 
-                        
-    <!-- Employee Table -->
-    <table>
-        <?php if (!empty($results)): ?>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone Number</th>
-                <th>Hire Date</th>
-                <th>Position</th>
-                <th>Actions</th>
-            </tr>
+        <!-- add employee -->
+        <a href="./addEmployee" class="add-btn">Add a New Employee</a><br>
+                
+        <!-- error message -->
+        <?php if (!empty($_SESSION['message'])) { ?>
+            <p>
+                <?= $_SESSION['message']?>
+                <?php $_SESSION['message'] = ''; ?>
+            <p>
+        <?php } ?> 
+                            
+        <!-- employee table -->
+        <table class="table table-sortable">
+            <?php if (!empty($results)) { ?>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>Hire Date</th>
+                        <th>Position</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
 
-            <?php foreach($results as $row): ?>
-                <tr>
-                    <td><?= $row['first_name'] . ' ' . $row['last_name']?></td>
-                    <td><?= $row['email']?></td>
-                    <td><?= $row['contact_no']?></td>
-                    <td><?= $row['hire_date']?></td>
-                    <td><?= $row['position_name']?></td>
+                <tbody >
+                    <?php foreach($results as $row) { ?>
+                        <tr>
+                            <td><?php echo $row['first_name'] . ' ' . $row['last_name']?></td>
+                            <td><?php echo $row['email']?></td>
+                            <td><?php echo $row['contact_no']?></td>
+                            <td><?php echo $row['hire_date']?></td>
+                            <td><?php echo $row['position_name']?></td>
 
-                    <td>
-                        <div class="class-buttons">
+                            <td>
+                                <div>
 
-                            <!-- Update Employee -->
-                            <form action="./updateEmployee/" method="POST">
-                                <input type="hidden" name="updateId" value="<?= $row['employee_id'] ?>">
-                                <button type="submit">Update</button>
-                            </form>
+                                    <!-- update employee -->
+                                    <form action="./updateEmployee/" method="POST">
+                                        <input type="hidden" name="updateId" value="<?php echo $row['employee_id'] ?>">
+                                        <button type="submit">Update</button>
+                                    </form>
 
-                            <!-- Delete Employee -->
-                            <form action="." method="POST">
-                                <input type="hidden" name="deleteId" value="<?= $row['employee_id'] ?>">
-                                <button type="submit">Delete</button>
-                            </form>
+                                    <!-- delete employee -->
+                                    <form action="." method="POST">
+                                        <input type="hidden" name="deleteId" value="<?php echo $row['employee_id'] ?>">
+                                        <button type="submit">Delete</button>
+                                    </form>
 
-                        </div>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            <?php } elseif (!empty($error)) { ?>
+                    <p> <?php echo $error ?> </p>
+            <?php } ?>
+        </table>
 
-            <?php elseif (isset($error)): ?>
-                <p> <?= $error ?> </p>
+        <!-- Pagination -->
+        <?php if ($totalPages > 1) { ?>
+            <div class="pagination">
+                <?php for ($i = 1; $i <= $totalPages; $i++) { ?>
+                    <a href="?<?php 
+                        $queryParams = $_GET;
+                        $queryParams['page'] = $i;
+                        echo http_build_query($queryParams);
+                    ?>" class="<?php echo $i === $page ? 'active' : '' ?>"><?php echo $i ?></a>
+                <?php } ?>
+            </div>
+        <?php } ?>
+    </div>
 
-        <?php endif; ?>
-    </table>
-</div>
+    <script src="../../_javascripts/sidebar.js"></script>
+    <script src="../../_javascripts/preventEmptySearch.js"></script>
 
-<script src="../../_javascripts/sidebar.js"></script>
 </body>
+
 </html>
