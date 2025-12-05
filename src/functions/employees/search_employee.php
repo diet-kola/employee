@@ -10,73 +10,63 @@ $offset = ($page - 1) * $limit;
 $totalEmployees = 0;
 $totalPages = 1;
 
-$query = "";
-$params = [];
+$where = "";
+$whereQuery = "";
+$conds = []; //conditions
 
 if (empty($_SESSION['employee_id'])) {
         header("Location: ../../login");
         exit;
 }
 
+$getPositions = $conn->prepare("SELECT position_id, position_name FROM positions ORDER BY position_name");
+$getPositions->execute();
+$positions = $getPositions->fetchAll();
+
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     // Handle search
     if (isset($_GET['action']) && $_GET['action'] === 'search' && isset($_GET['search'])) {
         $search = trim($_GET['search']);
-        $filter = trim($_GET['filter']);
-    }
+        $filter = trim($_GET['filter']); // get position_id
 
-    if (!empty($search)) {
-        switch($filter) {
+        if (!empty($search)) {
+            $whereQuery = "(e.first_name ~* ? OR e.last_name ~* ? OR (e.first_name || ' ' || e.last_name) ~* ?)";
+            $conds[] = $search;
+            $conds[] = $search;
+            $conds[] = $search;
+        }
+     
+        if (!empty($filter)) {
+            if (!empty($whereQuery)) {
+                $whereQuery .= " AND ";
+            }
+            $whereQuery .= "e.position_id = ?";
+            $conds[] = $filter;
+        }
 
-            case 'name':
-                break;
-            
-            case 'email':
-                break;
-
-            case 'contact':
-                break;
-
-            case 'position';
-                break;
-
-            default:
-                break;
-
+        if (!empty($whereQuery)) {
+            $whereQuery = "WHERE " . $whereQuery;
         }
     }
 
-
-    $countEmployees = $conn->prepare(" SELECT COUNT(*) 
-                                          FROM employees e 
-                                      JOIN positions p ON e.position_id = p.position_id
-                                          $where");
-    $countEmployees->execute($params);
+    $countEmployees = $conn->prepare("SELECT COUNT(*) FROM employees e JOIN positions p ON e.position_id = p.position_id $whereQuery");
+     if (!empty($conds)) {
+        $countEmployees->execute($conds);
+    } else {
+        $countEmployees->execute();
+    }
     $totalEmployees = $countEmployees->fetchColumn();
-
     $totalPages = ceil(max($totalEmployees, 1) / $limit);
-
-    $getEmployeesQuery = "SELECT e.employee_id, e.first_name, e.last_name, e.email, 
-                                 e.contact_no, e.hire_date, e.position_id, p.position_name
-                          FROM employees e
-                          JOIN positions p ON e.position_id = p.position_id
-                          $where
-                          ORDER BY e.first_name
-                          LIMIT ? OFFSET ?";
-
-    $fetchParams = $params;
-    $fetchParams[] = $limit;
-    $fetchParams[] = $offset;
 
     $getEmployees = $conn->prepare(" SELECT e.employee_id, e.first_name, e.last_name, e.email, 
                                          e.contact_no, e.hire_date, e.position_id, p.position_name
                                      FROM employees e
                                          JOIN positions p ON e.position_id = p.position_id
-                                     $where
+                                     $whereQuery
                                      ORDER BY e.first_name
-                                         LIMIT ? OFFSET ?");
-    $getEmployees->execute($fetchParams);
+                                         LIMIT $limit OFFSET $offset");
+    $getEmployees->execute($conds);
     $results = $getEmployees->fetchAll();
 
     if (!empty($search) && empty($results)) {

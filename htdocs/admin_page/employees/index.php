@@ -29,11 +29,34 @@ require_once '../../../src/functions/employees/delete_employee.php';
         <!-- employee search -->
         <form action="." method="GET" class="search-bar">  
             <input name="search" placeholder="Search for an Employee"> </input>
-            <select>
-                <option value="name">Name</option>
-                <option value="email">email</option>
-                <option value="position">Position</option>
+
+            <select name = "filter">
+                <option value="" 
+                    <?php if (isset($_GET['filter']) && $_GET['filter'] == "") {
+                        echo "selected";
+                    } else {
+                        echo "";
+                    }
+                    ?>
+                >
+                    No Filter
+                </option>
+
+                <?php foreach ($positions as $row) { ?>
+                    
+                    <option value="<?php echo $row['position_id']?>"
+                        <?php if (isset($_GET['filter']) && $_GET['filter'] == $row['position_id']) {
+                                echo "selected";
+                            } else {
+                                echo "";
+                            }
+                        ?>
+                    >
+                        <?php echo $row['position_name']?>
+                    </option>
+                <?php } ?>
             </select>
+
             <button type="submit" name="action" value="search">Search</button>
             <button type="submit">View All</button>
         </form>   
@@ -112,7 +135,7 @@ require_once '../../../src/functions/employees/delete_employee.php';
     </div>
 
     <script src="../../_javascripts/sidebar.js"></script>
-    <script src="../../_javascripts/preventEmptySearch.js"></script>
+    <!-- <script src="../../_javascripts/preventEmptySearch.js"></script> -->
 
 </body>
 
