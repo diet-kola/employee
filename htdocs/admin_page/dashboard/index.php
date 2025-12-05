@@ -28,18 +28,19 @@ require_once "../../../src/functions/dashboard/employee_stats.php";
         <h2>Dashboard</h2>
 
         <!-- show employee and position stats -->
-        <div>
-            <div>
+        <div class="dashboard-stats">
+            <div class="stat-card">
                 <h3>Total Employees</h3>
                 <p><?php echo $totalEmployees ?></p>
             </div>
 
-            <div>
+            <div class="stat-card">
                 <h3>Total Positions</h3>
                 <p><?php echo $totalPositions ?></p>
             </div>
         </div>
 
+        <hr>
         <!-- employees per position -->
         <h3>Employees per Position</h3>
         <table>

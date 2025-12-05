@@ -1,0 +1,167 @@
+/* PAGE BACKGROUND */
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url('pexels-pixabay-210604.jpg'); 
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    font-family: 'Copperplate Gothic Light', fantasy;
+    display: flex;
+    flex-direction: column;
+}
+header {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.3);
+    text-align: center;
+    padding: 20px 0;
+    font-family: 'Copperplate Gothic Light',fantasy;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+/* MAIN CONTAINER */
+.main {
+    width: 90%;
+    max-width: 1100px;
+    margin: 140px auto 50px auto;
+    background: rgba(255, 255, 255, 0.25);
+    padding: 40px;
+    border-radius: 25px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.25);
+}
+
+/* TITLE */
+h2 {
+    text-align: center;
+    font-size: 45px;
+    margin-top: 0;
+    margin-bottom: 30px;
+    color: black;
+    letter-spacing: 4px;
+}
+
+/* SUBHEADERS */
+h3 {
+    margin-top: 10px;
+    font-size: 22px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ADD SCHEDULE FORM BOX */
+.schedule-form {
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 25px;
+    padding: 7px;
+    margin-bottom: 40px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.25);   
+}
+
+/* FORM LAYOUT */
+.schedule-form form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.schedule-form label {
+    font-weight: bold;
+    width: 120px;
+}
+
+/* INPUTS */
+.schedule-form select,
+.schedule-form input[type="date"] {
+    padding: 8px 12px;
+    width: 180px;
+    background-color: #c5c3c3;
+    border: 2px solid black;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+/* ADD BUTTON */
+.schedule-form button {
+    padding: 10px 20px;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+    
+    /* NEW: Make button go to next line & center */
+    width: 200px;
+    display: block;
+    margin: 20px auto 0 auto;
+}
+
+
+.schedule-form button:hover {
+    background: black;
+    color: white;
+    transform: translate(-2px, -2px);
+}
+
+/* DIVIDER */
+hr {
+    border: none;
+    border-top: 2px solid rgba(0,0,0,0.3);
+    margin: 40px 0;
+}
+
+/* TABLE WRAPPER */
+.schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.25);
+}
+
+/* TABLE HEADER */
+.schedule-table th {
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 15px;
+    text-transform: uppercase;
+    font-family: Arial, Helvetica, sans-serif;
+    letter-spacing: 1px;
+}
+
+/* TABLE BODY */
+.schedule-table td {
+    padding: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* DELETE BUTTON */
+.del-btn {
+    padding: 8px 18px;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.del-btn:hover {
+    background: black;
+    color: white;
+    transform: translate(-2px, -2px);
+}

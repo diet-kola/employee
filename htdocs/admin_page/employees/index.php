@@ -1,7 +1,27 @@
 <?php
 session_start();
+
 require_once '../../../src/functions/employees/search_employee.php';
-require_once '../../../src/functions/employees/delete_employee.php';
+
+$showAddModal = false;
+// Handle Add Employee
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'addEmployee') {
+    require_once '../../../src/functions/employees/add_employee.php';
+    $showAddModal = true;
+}
+
+$showUpdModal = false;
+// Handle Update Employee
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'updateEmployee') {
+    require_once '../../../src/functions/employees/update_employee.php';
+    $showUpdModal = true;
+}
+
+// Handle Delete Employee
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteId'])) {
+    require_once '../../../src/functions/employees/delete_employee.php';
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -13,6 +33,7 @@ require_once '../../../src/functions/employees/delete_employee.php';
     <title>Admin Page</title>
     <link rel="stylesheet" href="../../_styles/admin_page.css">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../../_styles/modals.css">
 
 </head>
 
@@ -29,6 +50,7 @@ require_once '../../../src/functions/employees/delete_employee.php';
         <!-- employee search -->
         <form action="." method="GET" class="search-bar">  
             <input name="search" placeholder="Search for an Employee"> </input>
+            
 
             <select name = "filter">
                 <option value="" 
@@ -62,15 +84,19 @@ require_once '../../../src/functions/employees/delete_employee.php';
         </form>   
 
         <!-- add employee -->
-        <a href="./addEmployee" class="add-btn">Add a New Employee</a><br>
+        <button class="add-btn" id="openAddEmployee">Add a New Employee</button>
                 
         <!-- error message -->
-        <?php if (!empty($_SESSION['message'])) { ?>
-            <p>
-                <?= $_SESSION['message']?>
-                <?php $_SESSION['message'] = ''; ?>
-            <p>
-        <?php } ?> 
+         <div>
+            <?php if (!empty($_SESSION['message'])) { ?>
+                <p class="errors">
+                    <?php 
+                        echo $_SESSION['message'];
+                        $_SESSION['message'] = ''; 
+                    ?>
+                </p>
+            <?php } ?> 
+        </div>
                             
         <!-- employee table -->
         <table class="table table-sortable">
@@ -99,15 +125,25 @@ require_once '../../../src/functions/employees/delete_employee.php';
                                 <div>
 
                                     <!-- update employee -->
-                                    <form action="./updateEmployee/" method="POST">
+                                    <form action="." method="POST" class="update-form">
                                         <input type="hidden" name="updateId" value="<?php echo $row['employee_id'] ?>">
-                                        <button type="submit">Update</button>
+                                        <button type="button" class = "upd-button"
+                                            data-id="<?= $row['employee_id'] ?>"
+                                            data-firstn="<?= $row['first_name'] ?>"
+                                            data-lastn="<?= $row['last_name'] ?>"
+                                            data-email="<?= $row['email'] ?>"
+                                            data-phone="<?= $row['contact_no'] ?>"
+                                            data-position="<?= $row['position_id'] ?>"
+                                        >
+                                            Update
+                                        </button>
                                     </form>
 
                                     <!-- delete employee -->
-                                    <form action="." method="POST">
+                                    <form action="." method="POST" class="delete-form">
                                         <input type="hidden" name="deleteId" value="<?php echo $row['employee_id'] ?>">
-                                        <button type="submit">Delete</button>
+                                        <button type="button" class="del-button"
+                                        >Delete</button>
                                     </form>
 
                                 </div>
@@ -133,6 +169,16 @@ require_once '../../../src/functions/employees/delete_employee.php';
             </div>
         <?php } ?>
     </div>
+
+    <!-- ADD EMPLOYEE POPUP -->
+    <?php include './addEmployee/addEmpPopup.php'; ?>
+    <?php include './deleteEmployee/delEmpPopup.php'; ?>
+    <?php include './updateEmployee/updEmpPopup.php'; ?>
+
+
+    <script src="./updateEmployee/updateEmployee.js"></script>
+    <script src="./addEmployee/addEmployee.js"></script>
+    <script src="./deleteEmployee/deleteEmployee.js"></script>
 
     <script src="../../_javascripts/sidebar.js"></script>
     <!-- <script src="../../_javascripts/preventEmptySearch.js"></script> -->

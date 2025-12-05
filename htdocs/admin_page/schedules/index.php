@@ -2,7 +2,10 @@
 session_start();
 
 include_once "../../../src/functions/schedules/set_schedules.php";
-include_once "../../../src/functions/schedules/delete_schedules.php";
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['do']) && $_POST['do']  === 'delete') {
+    include_once "../../../src/functions/schedules/delete_schedules.php";
+}
 ?>
 
 <!DOCTYPE html>
@@ -13,6 +16,7 @@ include_once "../../../src/functions/schedules/delete_schedules.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Page</title>
     <link rel="stylesheet" href="../../_styles/admin_page.css">
+    <link rel="stylesheet" href="./styles.css">
 
 </head>
 
@@ -25,7 +29,7 @@ include_once "../../../src/functions/schedules/delete_schedules.php";
 
 <!-- MAIN CONTENT -->
 <div class="main" id="main">
-    <h2>Employee Schedules</h2>
+    <h3>Employee Schedules</h3>
 
     <div class="schedule-form">
         <h3>Add New Schedule</h3>
@@ -57,7 +61,9 @@ include_once "../../../src/functions/schedules/delete_schedules.php";
         </form>
 
         <?php if ($error) { ?>
-            <?php echo $error ?>
+            <p class="errors">
+                <?php echo $error ?>
+            </p>
         <?php } ?> 
     </div>
 
@@ -84,7 +90,7 @@ include_once "../../../src/functions/schedules/delete_schedules.php";
                     <form action="." method="POST">
                         <input type="hidden" name="do" value="delete">
                         <input type="hidden" name="id" value="<?= $rows['schedule_id'] ?>">
-                        <button type="submit" class="del-btn">Delete</button>
+                        <button type="button" class="del-btn">Delete</button>
                     </form>
                 </td>
             </tr>
@@ -92,6 +98,9 @@ include_once "../../../src/functions/schedules/delete_schedules.php";
     </table>
 </div>
 
+<?php include "./deleteSchedule/delSchedPopup.php"?>
+
+<script src="./deleteSchedule/deleteSchedule.js"></script>
 <script src="../../_javascripts/sidebar.js"></script>
 
 </body>

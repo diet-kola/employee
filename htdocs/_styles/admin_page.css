@@ -1,4 +1,5 @@
 body {
+    font-family: Gotham;
     margin: 0;
     padding: 0;
 }
@@ -12,7 +13,7 @@ body {
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #111;
+    background-color: #610C27;
 
     overflow-x: hidden;
     padding-top: 60px;
@@ -25,7 +26,7 @@ body {
     text-decoration: none;
     font-size: 20px;
     font-family: Gotham;
-    color: #818181;
+    color: #050505;
     display: block;
     transition: 0.3s
 }
@@ -44,10 +45,10 @@ body {
 
 
 .header-container {
-    background-color: antiquewhite;
+    background-color: rgba(255, 255, 255, 0.3);
     display: flex;
     align-items: center;  
-    padding: 15px;
+    padding: 30px;
 }
 
 /* Hamburger */

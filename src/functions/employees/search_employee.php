@@ -19,11 +19,15 @@ if (empty($_SESSION['employee_id'])) {
         exit;
 }
 
-$getPositions = $conn->prepare("SELECT position_id, position_name FROM positions ORDER BY position_name");
-$getPositions->execute();
-$positions = $getPositions->fetchAll();
+try {
+    $getPositions = $conn->prepare("SELECT position_id, position_name FROM positions ORDER BY position_name");
+    $getPositions->execute();
+    $positions = $getPositions->fetchAll();
+} catch (PDOException $e) {
+    $error = "Failed to get positions: " . $e->getMessage();
+}
 
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+if ($_SERVER['REQUEST_METHOD'] === 'GET' || $_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Handle search
     if (isset($_GET['action']) && $_GET['action'] === 'search' && isset($_GET['search'])) {
@@ -50,28 +54,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         }
     }
 
-    $countEmployees = $conn->prepare("SELECT COUNT(*) FROM employees e JOIN positions p ON e.position_id = p.position_id $whereQuery");
-     if (!empty($conds)) {
+    try {
+        $countEmployees = $conn->prepare("SELECT COUNT(*) FROM employees e JOIN positions p ON e.position_id = p.position_id $whereQuery");
         $countEmployees->execute($conds);
-    } else {
-        $countEmployees->execute();
-    }
-    $totalEmployees = $countEmployees->fetchColumn();
-    $totalPages = ceil(max($totalEmployees, 1) / $limit);
+        $totalEmployees = $countEmployees->fetchColumn();
+        $totalPages = ceil(max($totalEmployees, 1) / $limit);
 
-    $getEmployees = $conn->prepare(" SELECT e.employee_id, e.first_name, e.last_name, e.email, 
-                                         e.contact_no, e.hire_date, e.position_id, p.position_name
-                                     FROM employees e
-                                         JOIN positions p ON e.position_id = p.position_id
-                                     $whereQuery
-                                     ORDER BY e.first_name
-                                         LIMIT $limit OFFSET $offset");
-    $getEmployees->execute($conds);
-    $results = $getEmployees->fetchAll();
+        $getEmployees = $conn->prepare(" SELECT e.employee_id, e.first_name, e.last_name, e.email, 
+                                            e.contact_no, e.hire_date, e.position_id, p.position_name
+                                        FROM employees e
+                                            JOIN positions p ON e.position_id = p.position_id
+                                        $whereQuery
+                                        ORDER BY e.first_name
+                                            LIMIT $limit OFFSET $offset");
+        $getEmployees->execute($conds);
+        $results = $getEmployees->fetchAll();
 
-    if (!empty($search) && empty($results)) {
-        $_SESSION['message'] = "There was no match for your search";
+        if (!empty($search) && empty($results)) {
+            $error = "There was no match for your search";
+        }
+    } catch (PDOException $e) {
+        $error = "Error fetching employees: " . $e->getMessage();
     }
-    
 }
 

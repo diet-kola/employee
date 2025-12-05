@@ -1,3 +1,237 @@
-.table-headers:hover {
+/* Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    
+}
+
+html, body {
+    height: 100%;
+}
+
+/* Body */
+body {
+    font-family: Gotham;
+    background-color: #f9f9f9;
+    color: #333;
+    font-size: 14px; /* slightly smaller base font */
+    background-image: url(../../_resources/pexels-pixabay-210604.jpg); 
+    background-size: cover;                    /* fills screen */
+    background-position: center;               /* centers photo */
+    background-repeat: no-repeat;
+}
+
+/* Main content */
+.main {
+    transition: margin-left 0.5s;
+    padding: 15px;
+}
+
+/* Search bar */
+.search-bar {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 15px;
+}
+
+.errors {
+    background-color: rgba(255, 255, 255); 
+    color: red;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 13px;
+    display: inline-block;
+    margin-top: 5px;
+}
+
+.search-bar input,
+.search-bar select {
+    padding: 5px 8px;
+    font-size: 14px;
+}
+
+.search-bar button {
+    padding: 5px 10px;
+    background-color: #610C27;
+    color: #fff;
+    border: none;
     cursor: pointer;
+    font-size: 14px;
+}
+
+.search-bar button:hover {
+    background-color: #45081B;
+}
+
+/* Table */
+.table-sortable {
+    width: 80%;           /* smaller width */
+    max-width: 900px;     /* optional max-width */
+    margin: 20px auto;    /* centers the table with top/bottom margin */
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 0 3px rgba(0,0,0,0.1);
+}
+
+.table-sortable th,
+.table-sortable td {
+    text-align: left;
+    padding: 10px 12px;    /* smaller padding for compactness */
+    border-bottom: 1px solid #ddd;
+    font-size: 15px;      /* slightly smaller font */
+}
+
+.table-sortable th {
+    background-color: #610C27;
+    color: #fff;
+}
+
+.table-sortable tr:hover {
+    background-color: #f2f2f2;
+}
+
+/* Button container inside table */
+.table-sortable td div {
+    display: flex;           /* make child buttons inline */
+    gap: 5px;                /* space between buttons */
+}
+
+/* Buttons */
+.add-btn,
+.submit-btn {
+    padding: 6px 15px;
+    background-color: #6a112d;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+.add-btn:hover,
+.submit-btn:hover {
+    background-color: #45081B;
+}
+
+.upd-button,
+.del-button {
+    padding: 6px 12px;
+    background-color: #610C27;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 4px;
+}
+
+.del-button {
+    background-color: #B22222;
+}
+
+.upd-button:hover {
+    background-color: #45081B;
+}
+
+.del-button:hover {
+    background-color: #800000;
+}
+
+/* Modals */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 15px 20px; /* smaller padding */
+    border-radius: 8px;
+    width: 350px; /* smaller width */
+    max-width: 90%;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.modal-content h2 {
+    margin-bottom: 15px;
+    color: #610C27;
+    font-size: 16px;
+}
+
+.modal-content .close {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.modal-content label {
+    display: block;
+    margin-top: 8px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.modal-content input,
+.modal-content select {
+    width: 100%;
+    padding: 6px;
+    margin-top: 4px;
+    font-size: 14px;
+}
+
+/* Solid pagination styling */
+.pagination {
+    display: inline-flex;       /* shrink to fit content */
+    gap: 5px;
+    justify-content: center;    /* centers the pagination block */
+    background-color: #ffffff;  /* solid background */
+    padding: 5px 10px;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    margin: 15px auto;          /* centers block horizontally */
+}
+
+/* Page links */
+.pagination a {
+    text-decoration: none;
+    color: #610C27;
+    padding: 5px 10px;
+    border: 1px solid #610C27;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: #fff;
+}
+
+.pagination a.active {
+    background-color: #610C27;
+    color: #fff;
+}
+
+.pagination a:hover {
+    background-color: #45081B;
+    color: #fff;
+}
+
+/* Error messages */
+#errorMsg,
+#addErrorMsg,
+#updErrMsg {
+    color: red;
+    margin-top: 5px;
+    font-weight: bold;
+    font-size: 13px;
 }

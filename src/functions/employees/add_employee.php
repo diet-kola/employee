@@ -2,15 +2,17 @@
 require_once __DIR__ . '/../../config/database.php';
 
 $conn = connectDB();
-$error = "";
-$name = '';
 
+$modal = !empty($error);
+
+// stops from directly going to this page
 if (empty($_SESSION['employee_id'])) {
         header("Location: ../../login");
         exit;
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST')
+// makes sure it only runs when form is submitted
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'addEmployee')
 {
     // get all inputs
     $firstName = trim($_POST['first_name']);
@@ -20,26 +22,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     $position_id = $_POST['position_id'];
 
     // check if inputs are empty, set error if yes
-    if (empty($firstName)) { $error = 'First Name is Required'; }
-    elseif (empty($lastName)) { $error = 'Last Name is Required'; }
-    elseif (empty($email)) { $error = 'Email is required'; }
-    elseif (empty($phoneNum)) { $error = 'Phone Number is Required'; }
-    elseif (empty($position_id)) { $error = "Position of the Employee is Required"; }
+    if (empty($firstName)) { $addError = 'First Name is Required'; }
+    elseif (empty($lastName)) { $addError = 'Last Name is Required'; }
+    elseif (empty($email)) { $addError = 'Email is required'; }
+    elseif (empty($phoneNum)) { $addError = 'Phone Number is Required'; }
+    elseif (empty($position_id)) { $addError = "Position of the Employee is Required"; }
     else 
     {
-        //check if email is already in use by an employee
-        $check = $conn->prepare("SELECT employee_id FROM employees WHERE email = ?");
-        $check->execute([$email]);
-        $userExists = $check->fetch(); 
-        
-        if ($userExists) { $error = "Email is already in use"; } // set error if email is in use
-        else 
-        {
-            //insert into employee database
-            $insert = $conn->prepare('INSERT INTO employees (first_name, last_name, email, contact_no, position_id) VALUES (?, ?, ?, ?, ?)');
-            $insert->execute([$firstName, $lastName, $email, $phoneNum, $position_id]);
+        try {
+            //check if email is already in use by an employee
+            $check = $conn->prepare("SELECT employee_id FROM employees WHERE email = ?");
+            $check->execute([$email]);
+            $userExists = $check->fetch(); 
+            
+            if ($userExists) { $error = "Email is already in use"; } // set error if email is in use
+            else 
+            {
+                //insert into employee database
+                $insert = $conn->prepare('INSERT INTO employees (first_name, last_name, email, contact_no, position_id) VALUES (?, ?, ?, ?, ?)');
+                $insert->execute([$firstName, $lastName, $email, $phoneNum, $position_id]);
 
-            $name = $firstName . " " . $lastName . ' has been hired.'; //get employee name for display message
+                $_SESSION['message'] = $firstName . " " . $lastName . ' has been hired.'; //get employee name for display message
+                header ("Location: " . $_SERVER['PHP_SELF']);
+                exit;
+            }
+        } catch (PDOException $e) {
+            $addError = "Database error: " . $e->getMessage();
         }
     }
 }

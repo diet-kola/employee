@@ -1,10 +1,39 @@
 body {
     margin: 0;
     padding: 0;
-    background-image: url("../../_resources/pexels-pixabay-210604.jpg");   /* CHANGE THIS */
+    font-family: Arial, sans-serif;
+
+    background-image: url("pexels-pixabay-210604.jpg");   /* CHANGE THIS */
     background-size: cover;                    /* fills screen */
     background-position: center;               /* centers photo */
     background-repeat: no-repeat;
+}
+
+
+/* Header (AZURE HOTEL) */
+header {
+    background-color: rgba(255, 255, 255, 0.3);
+    text-align: center;
+     padding: 25px 0;
+    font-family: 'Copperplate Gothic Light', fantasy;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    width: 100%;
+}
+
+.design-header h1 {
+    font-size: 48px;
+    letter-spacing: 5px;
+    font-weight: 300;
+    margin: 0;
+}
+
+/* "Dashboard" title */
+h2 {
+    text-align: left;
+    margin-left: 80px;
+    margin-top: 40px;
+    font-size: 26px;
 }
 
 /* Stats Container */
@@ -19,9 +48,6 @@ body {
 /* Individual stat card */
 .stat-card {
     background: #f2efef;
-    border-style: solid;
-    border-width: 2px;
-    border-color: #050505;
     width: 350px;              /* match screenshot width */
     height: 170px;             /* makes centering perfect */
     border-radius: 35px;
@@ -65,7 +91,7 @@ table {
 
 /* Table header */
 table th {
-    background: #610C27;
+    background: #6d6a6a;
     color: white;
     padding: 20px;
     font-size: 18px;

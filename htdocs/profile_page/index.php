@@ -22,6 +22,10 @@ include_once "../../src/functions/profile/profile.php";
         <?php include '../_reusables/header.php'; ?>
     <?php } ?>
 
+    <?php if (!empty($error)) { ?>
+        <p><?php echo $error;?></p>
+    <?php } ?>
+
     <div id="main" class="main">
         <h2>Profile Information</h2>
 
