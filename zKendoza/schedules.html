@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <link rel="stylesheet" href="../../_styles/admin_page.css">
+
+</head>
+
+<body>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+    <h2>Employee Schedules</h2>
+
+    <div class="schedule-form">
+        <h3>Add New Schedule</h3>
+
+        <form action="." method="POST">
+
+            <label>Employee:</label>
+            <select name="employee_id">
+                <option value="">Select Employee</option>
+                <option value="">Name1</option>
+                <option value="">Name2</option>
+                <option value="">Name3</option>
+            </select>
+
+            <label>Date:</label>
+            <input type="date" name="work_date" required>
+
+            <label>Shift Type:</label>
+            <select name="shift_type" required>
+                <option value="">Select Shift</option>
+                <option value="Day Shift">Day Shift</option>
+                <option value="Night Shift">Night Shift</option>
+            </select>
+
+            <button type="submit">Add Schedule</button>
+        </form>
+    </div>
+
+    <hr>
+
+    <!-- Schedule Table -->
+    <h3>Assigned Schedules</h3>
+
+    <table class="schedule-table">
+        <tr>
+            <th>Employee</th>
+            <th>Date</th>
+            <th>Shift Type</th>
+            <th>Actions</th>
+        </tr>
+
+        <tr>
+            <td>Name1</td>
+            <td>Date1</td>
+            <td>DayShift</td>
+
+            <td>
+                <form action="." method="POST">
+                    <input type="hidden" name="id" value="">
+                    <button type="submit" class="del-btn">Delete</button>
+                </form>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Name2</td>
+            <td>Date2</td>
+            <td>NightShift</td>
+
+            <td>
+                <form action="." method="POST">
+                    <input type="hidden" name="id" value="">
+                    <button type="submit" class="del-btn">Delete</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>
