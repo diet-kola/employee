@@ -37,7 +37,7 @@ require_once "../../src/functions/logging/login.php";
                 </div>
                 <div class="input-container">
                     <label for="password">Password</label>
-                    <input type="password"id="password" name="password">
+                    <input type="password" id="password" name="password">
                 </div>
 
                 <button type="submit" class="log-in-button">Log In</button>
@@ -49,6 +49,6 @@ require_once "../../src/functions/logging/login.php";
     </div>
 </body>
 
-<!-- <script src="../API/clearLogin.js"></script> -->
+<script src="../_javascripts/clearLogin.js"></script>
 
 </html>

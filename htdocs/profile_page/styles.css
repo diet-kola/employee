@@ -1,0 +1,66 @@
+body {
+font-family: Gotham;
+background-color: #f4f6f8;
+margin: 0;
+padding: 0;
+color: #333;
+background-image: url('../_resources/pexels-pixabay-210604.jpg'); 
+    background-size: cover;
+    background-position: center;
+}
+
+/* Main container */
+.main {
+   padding: 40px;
+    border-radius: 25px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* Headings */
+h2, h3 {
+color: #2c3e50;
+margin-bottom: 20px;
+}
+
+/* Profile card */
+.profile-card {
+background-color: #e8f0fe;
+padding: 20px;
+border-radius: 10px;
+margin-bottom: 30px;
+}
+
+.profile-card p {
+margin: 8px 0;
+font-size: 16px;
+}
+
+/* Schedule table */
+table {
+width: 100%;
+border-collapse: collapse;
+margin-bottom: 30px;
+}
+
+table th, table td {
+padding: 12px 15px;
+text-align: left;
+border-bottom: 1px solid #ddd;
+}
+
+table th {
+background-color: #610C27;
+color: #fff;
+font-weight: 600;
+}
+
+table tr:hover {
+background-color: #f1f8ff;
+}
+
+/* Error message */
+p.error {
+color: #e74c3c;
+font-weight: bold;
+}

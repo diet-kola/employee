@@ -4,13 +4,12 @@ $conn = connectDB();
 
 $results = [];
 $search = '';
-$limit = 10; // number of employees per page
+$limit = 7; // number of employees per page
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 $totalEmployees = 0;
 $totalPages = 1;
 
-$where = "";
 $whereQuery = "";
 $conds = []; //conditions
 
@@ -32,8 +31,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' || $_SERVER['REQUEST_METHOD'] === 'POST
     // Handle search
     if (isset($_GET['action']) && $_GET['action'] === 'search' && isset($_GET['search'])) {
         $search = trim($_GET['search']);
-        $filter = trim($_GET['filter']); // get position_id
+        $filter = trim($_GET['filter']); // get position_id for search filtering
 
+        // builds the where query
         if (!empty($search)) {
             $whereQuery = "(e.first_name ~* ? OR e.last_name ~* ? OR (e.first_name || ' ' || e.last_name) ~* ?)";
             $conds[] = $search;
@@ -55,13 +55,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' || $_SERVER['REQUEST_METHOD'] === 'POST
     }
 
     try {
+        // get number of employees
         $countEmployees = $conn->prepare("SELECT COUNT(*) FROM employees e JOIN positions p ON e.position_id = p.position_id $whereQuery");
         $countEmployees->execute($conds);
         $totalEmployees = $countEmployees->fetchColumn();
-        $totalPages = ceil(max($totalEmployees, 1) / $limit);
+        $totalPages = ceil(max($totalEmployees, 1) / $limit); // gets total pages
 
+        // query that gets employees.
+        // adds the where query that we built for search and filteering
         $getEmployees = $conn->prepare(" SELECT e.employee_id, e.first_name, e.last_name, e.email, 
-                                            e.contact_no, e.hire_date, e.position_id, p.position_name
+                                            e.contact_no, e.hire_date, e.position_id, e.password, p.position_name
                                         FROM employees e
                                             JOIN positions p ON e.position_id = p.position_id
                                         $whereQuery
@@ -70,6 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' || $_SERVER['REQUEST_METHOD'] === 'POST
         $getEmployees->execute($conds);
         $results = $getEmployees->fetchAll();
 
+        //error handling
         if (!empty($search) && empty($results)) {
             $error = "There was no match for your search";
         }

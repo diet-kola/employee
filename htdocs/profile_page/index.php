@@ -11,7 +11,10 @@ include_once "../../src/functions/profile/profile.php";
     <title>Document</title>
     <?php if ($user['position_id'] == 9) { ?>
         <link rel="stylesheet" href="../../_styles/admin_page.css">
+    <?php } else { ?>
+        <link rel="stylesheet" href="./header.css">
     <?php } ?>
+    <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
 
@@ -20,6 +23,11 @@ include_once "../../src/functions/profile/profile.php";
         <?php include '../_reusables/sidebar.php'; ?>
         <!-- HEADER -->
         <?php include '../_reusables/header.php'; ?>
+    <?php } else { ?>
+        <header class="profile-header">
+            Employee Profile
+            <a href="../logout" class="logout-button">Logout</a>
+        </header>
     <?php } ?>
 
     <?php if (!empty($error)) { ?>

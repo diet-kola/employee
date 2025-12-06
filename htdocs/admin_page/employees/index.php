@@ -49,7 +49,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteId'])) {
 
         <!-- employee search -->
         <form action="." method="GET" class="search-bar">  
-            <input name="search" placeholder="Search for an Employee"> </input>
+
+            <input name="search" placeholder="Search for an Employee" 
+            value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>"> </input>
             
 
             <select name = "filter">
@@ -108,6 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteId'])) {
                         <th>Phone Number</th>
                         <th>Hire Date</th>
                         <th>Position</th>
+                        <th>Registered</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -120,7 +123,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteId'])) {
                             <td><?php echo $row['contact_no']?></td>
                             <td><?php echo $row['hire_date']?></td>
                             <td><?php echo $row['position_name']?></td>
-
+                            <td>
+                                <p>
+                                      <?php echo ($row['password'] != null) ? "\u{2713}" : "&times;"; ?>
+                                </p>
                             <td>
                                 <div>
 
@@ -138,12 +144,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteId'])) {
                                             Update
                                         </button>
                                     </form>
-
                                     <!-- delete employee -->
                                     <form action="." method="POST" class="delete-form">
                                         <input type="hidden" name="deleteId" value="<?php echo $row['employee_id'] ?>">
-                                        <button type="button" class="del-button"
-                                        >Delete</button>
+                                        <button type="button" class="del-button">Delete</button>
                                     </form>
 
                                 </div>
@@ -161,9 +165,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteId'])) {
             <div class="pagination">
                 <?php for ($i = 1; $i <= $totalPages; $i++) { ?>
                     <a href="?<?php 
-                        $queryParams = $_GET;
-                        $queryParams['page'] = $i;
-                        echo http_build_query($queryParams);
+                        $queryParams = $_GET; // get current url parameters
+                        $queryParams['page'] = $i; // replace page numbers
+                        echo http_build_query($queryParams); // convert array back to a query string
+                        // add active class to the page you are currently on otherwise set ""
                     ?>" class="<?php echo $i === $page ? 'active' : '' ?>"><?php echo $i ?></a>
                 <?php } ?>
             </div>

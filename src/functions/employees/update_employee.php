@@ -8,33 +8,37 @@ if (empty($_SESSION['employee_id'])) {
         exit;
 }  
 
-//get all positions
+// get all positions
 $getPositions = $conn->query("SELECT * FROM positions ORDER BY position_id");
 $positions = $getPositions->fetchAll();
 
-
+// goes thruogh only when update button is clicked
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'updateEmployee') 
 {
   $employeeId = $_POST['updateId']; 
 
+  // get employees
   $getEmployee = $conn->prepare("SELECT * FROM employees WHERE employee_id = ?");
   $getEmployee->execute([$employeeId]);
   $employee = $getEmployee->fetch();
 
-  $employeeName = $employee['first_name'] . " " . $employee['last_name'];
+  $employeeName = $employee['first_name'] . " " . $employee['last_name']; // store name for display
 
+  // stops the user from editing himself.
   if ($employee['employee_id'] == $_SESSION['employee_id']) {
-    $_SESSION['message'] = $employeeName . " is currently logged in and can't be updated";
+    $_SESSION['admin_name'] = $employeeName . " is currently logged in and can't be updated";
     header("Location: .");
     exit;
   }
 
+  //get input
   $firstName = trim($_POST['first_name']);
   $lastName = trim($_POST['last_name']);
   $email = trim($_POST['email']);
   $contactNo = trim($_POST['phoneNum']);
   $positionId = $_POST['position_id'];
 
+  //error handling
   if (empty($firstName)) { $updError = "First name is required.";}
   elseif (empty($lastName)) { $updError = "Last name is required.";}
   elseif (empty($email)) { $updError = "Email is required.";}
@@ -43,6 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
   else
   {
       try { 
+        //update query
       $update = $conn->prepare("UPDATE employees
                                 SET first_name = ?, last_name = ?, email = ?, contact_no = ?, position_id = ?
                                 WHERE employee_id = ?

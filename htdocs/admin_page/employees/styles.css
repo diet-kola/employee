@@ -1,10 +1,8 @@
-<<<<<<< HEAD
 /* Reset */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    
 }
 
 html, body {
@@ -236,8 +234,7 @@ body {
     font-weight: bold;
     font-size: 13px;
 }
-=======
+
 .table-headers:hover {
     cursor: pointer;
 }
->>>>>>> 9431cc4c8e1c8a7e02d84d6770eb5d668480707c

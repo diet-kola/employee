@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     // get all inputs
     $firstName = trim($_POST['first_name']);
     $lastName = trim($_POST['last_name']);
-    $email = trim($_POST['email']);
+    $email = trim($_POST['email']); 
     $phoneNum = trim($_POST['phoneNum']);
     $position_id = $_POST['position_id'];
 

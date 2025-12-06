@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once "../../../src/functions/dashboard/employee_stats.php";
+
 ?>
 
 <!DOCTYPE html>

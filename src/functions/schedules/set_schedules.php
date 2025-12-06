@@ -15,14 +15,13 @@ $getEmployees->execute();
 $employees = $getEmployees->fetchAll();
 
 // get existing schedules
-$getSchedules = $conn->prepare("
+$getSchedules = $conn->query("
     SELECT s.schedule_id, s.work_date, s.shift_type,
            e.first_name, e.last_name
     FROM schedules s
     JOIN employees e ON s.employee_id = e.employee_id
     ORDER BY s.work_date
 ");
-$getSchedules->execute();
 $schedules = $getSchedules->fetchAll();
 
 // set schedule

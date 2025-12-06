@@ -19,5 +19,4 @@ document.querySelectorAll(".upd-button").forEach(btn => {
 closeUpdateBtn.addEventListener("click", () => {
     updateModal.style.display = "none";
     if (updErrorMsg) updErrorMsg.style.display = 'none';
-   
 });

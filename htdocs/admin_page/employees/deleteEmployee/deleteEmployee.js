@@ -18,10 +18,6 @@ document.querySelectorAll(".del-button").forEach(btn => {
 closeDeleteBtn.addEventListener("click", () => deleteModal.style.display = "none");
 cancelDeleteBtn.addEventListener("click", () => deleteModal.style.display = "none");
 
-// Close when clicking outside delete modal
-window.addEventListener("click", (e) => {
-    if (e.target === deleteModal) deleteModal.style.display = "none";
-});
 
 // Confirm delete
 confirmDeleteBtn.addEventListener("click", () => {

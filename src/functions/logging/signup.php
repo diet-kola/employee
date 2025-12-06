@@ -11,13 +11,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         $email = trim($_POST["email"]);
         $password = $_POST['password'];
 
-        // check if may allowed ba yung email para gumawa ng admin account
+        // error handling
         if (empty($email)) { $error = "Email is required";}
         elseif (empty($password)) { $error = "Password is required";}
         elseif (strlen($password) < 8) { $error = "Password must be atleast 8 characters long";}
         else 
         {
-            // check kung nasa system  na ba yung email
+            // check if authorized bang gumawa ng account yung email
             $check = $conn->prepare("SELECT * FROM employees WHERE email = ?");
             $check->execute([$email]);
             $userExists = $check->fetch();

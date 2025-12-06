@@ -3,7 +3,7 @@
         <span class="close" id="closeUpdateModal">&times;</span>
 
         <h2>Update Employee</h2>
-
+ 
         <?php if (!empty($updError)) { ?>
             <p id="updErrMsg">
                 <?php echo $updError;?>

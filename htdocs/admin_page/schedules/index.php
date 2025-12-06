@@ -82,9 +82,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['do']) && $_POST['do']
 
         <?php foreach ($schedules as $rows) { ?>
             <tr>
-                <td><?= $rows['first_name'] . " " . $rows['last_name'] ?></td>
-                <td><?= $rows['work_date'] ?></td>
-                <td><?= $rows['shift_type'] ?></td>
+                <td><?php echo $rows['first_name'] . " " . $rows['last_name'] ?></td>
+                <td><?php echo $rows['work_date'] ?></td>
+                <td><?php echo $rows['shift_type'] ?></td>
 
                 <td>
                     <form action="." method="POST">

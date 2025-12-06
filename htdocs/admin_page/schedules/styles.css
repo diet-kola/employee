@@ -1,25 +1,31 @@
 /* PAGE BACKGROUND */
 body {
-    margin: 0;
+    
+     margin: 0;
+     margin-top: 50px;
+     color: #050505;
     padding: 0;
-    background-image: url(../../_resources/pexels-pixabay-210604.jpg); 
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column; /* stack header, forms, tables vertically */
+    align-items: center;    /* horizontal centering */
+    background-image: url(../../_resources/pexels-pixabay-210604.jpg);
     background-size: cover;
     background-position: center;
-
+    font-family: Gotham;
 }
 
 
 /* MAIN CONTAINER */
 .main {
-    width: 90%;
-    max-width: 1100px;
-    margin: 140px auto 50px auto;
+
     background: rgba(255, 255, 255, 0.25);
     padding: 40px;
     border-radius: 25px;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     box-shadow: 0px 4px 12px rgba(0,0,0,0.25);
+
 }
 
 /* SUBHEADERS */
@@ -110,7 +116,7 @@ hr {
 
 /* TABLE HEADER */
 .schedule-table th {
-    background: rgba(0, 0, 0, 0.6);
+    background: #610C27;
     color: white;
     padding: 15px;
     text-transform: uppercase;

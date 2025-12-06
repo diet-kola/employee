@@ -1,14 +1,21 @@
-<div class="modal" id="addEmployeeModal" style="display: <?= $showAddModal ? 'flex' : 'none' ?>;">
+<div class="modal" id="addEmployeeModal" style="display: none;">
         <div class="modal-content">
             <span class="close" id="closeAddEmployee">&times;</span>
 
-            <h2>Add Employee</h2>
+            <h2>Add Employee</h2> 
 
             <form class="addEmployee" action="." method="POST">
                 <input type="hidden" name="action" value="addEmployee">
 
                 <?php if (!empty($addError)) { ?>
                     <p id="addErrMsg"><?php echo $addError; ?></p>
+                <?php } ?>
+
+                <?php if ($showAddModal) { ?>
+                    <script>
+                        const addModal = document.getElementById("addEmployeeModal");
+                        if (addModal) addModal.style.display = "flex";
+                    </script>
                 <?php } ?>
 
                 <label>First Name</label>

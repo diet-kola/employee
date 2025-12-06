@@ -8,6 +8,8 @@ if (empty($_SESSION['employee_id'])) {
 }
 
 try {
+
+    // Get all information of user
     $userId = $_SESSION['employee_id'];
 
     $getUser = $conn->prepare(" SELECT e.employee_id, e.first_name, e.last_name, e.email, e.contact_no, e.hire_date, p.position_name, p.position_id

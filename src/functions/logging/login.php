@@ -38,9 +38,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                 else
                 {
                     //employee login
-                    header('Location: ../profile_page'); // redirect to their profile
+                    header('Location: ../profile_page'); // redirect to their profile\\
                     exit;
                 }
+                
             }
             else { $error = 'Invalid email or password'; }
         }
