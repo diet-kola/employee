@@ -7,8 +7,7 @@ let formToSubmit = null;
 
 // Open delete modal when clicking a Delete button
 document.querySelectorAll(".del-button").forEach(btn => {
-    btn.addEventListener("click", (e) => {
-        e.preventDefault();
+    btn.addEventListener("click", () => {
         formToSubmit = btn.closest("form"); // store the form
         deleteModal.style.display = "flex";
     });
